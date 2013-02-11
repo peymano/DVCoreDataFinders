@@ -140,7 +140,14 @@
   STAssertNil(entry, nil);
 }
 
-- (void)testFindOneWithPredicateMatching
+- (void)testFindOneWithSimplePredicateMatching
+{
+  JournalEntry *entry = [JournalEntry findOneWithPredicate:[NSPredicate predicateWithFormat:@"title = %@", @"title 6"] inContext:self.managedObjectContext error:nil];
+  STAssertNotNil(entry, nil);
+  STAssertTrue(entry.id.integerValue == 6, nil);
+}
+
+- (void)testFindOneWithContainsPredicateMatching
 {
   JournalEntry *entry = [JournalEntry findOneWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '6'"] inContext:self.managedObjectContext error:nil];
   STAssertNotNil(entry, nil);
