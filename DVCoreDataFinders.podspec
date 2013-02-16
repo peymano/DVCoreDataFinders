@@ -11,7 +11,9 @@ Pod::Spec.new do |s|
   s.license      = "Apache 2.0"
   s.author       = { "Peyman Oreizy" => "peymano@dynamicvariable.com" }
   s.source       = { :git => "https://github.com/peymano/DVCoreDataFinders.git", :tag => "0.1" }
-  s.platform     = :ios, '5.0'
   s.source_files = 'DVCoreDataFinders'
+  s.public_header_files = 'DVCoreDataFinders/DVCoreDataFinders.h'
+  s.platform     = :ios, '5.0'
+  s.framework    = 'CoreData'
   s.requires_arc = true
 end

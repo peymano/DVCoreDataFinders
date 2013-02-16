@@ -60,6 +60,7 @@
 		700A164816C97408007A8E71 /* Tests.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tests.xcdatamodel; sourceTree = "<group>"; };
 		700A164A16C97466007A8E71 /* JournalEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JournalEntry.h; sourceTree = "<group>"; };
 		700A164B16C97466007A8E71 /* JournalEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalEntry.m; sourceTree = "<group>"; };
+		700C69E216D021BE00F7CA59 /* DVCoreDataFinders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVCoreDataFinders.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +120,7 @@
 		700A161B16C96BC9007A8E71 /* DVCoreDataFinders */ = {
 			isa = PBXGroup;
 			children = (
+				700C69E216D021BE00F7CA59 /* DVCoreDataFinders.h */,
 				700A164116C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.h */,
 				700A164216C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m */,
 				700A161C16C96BC9007A8E71 /* Supporting Files */,
@@ -417,6 +419,7 @@
 				700A163D16C96BC9007A8E71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		700A163E16C96BC9007A8E71 /* Build configuration list for PBXNativeTarget "DVCoreDataFindersTests" */ = {
 			isa = XCConfigurationList;
@@ -425,6 +428,7 @@
 				700A164016C96BC9007A8E71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

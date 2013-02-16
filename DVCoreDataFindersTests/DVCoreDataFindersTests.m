@@ -5,7 +5,7 @@
 
 #import <CoreData/CoreData.h>
 #import "DVCoreDataFindersTests.h"
-#import "NSManagedObject+DVCoreDataFinders.h"
+#import "DVCoreDataFinders.h"
 #import "JournalEntry.h"
 
 @implementation DVCoreDataFindersTests
