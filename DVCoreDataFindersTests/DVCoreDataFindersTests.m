@@ -127,36 +127,36 @@
   STAssertTrue(entries.count == 0, nil);
 }
 
-- (void)testFindOne
+- (void)testFindFirst
 {
-  JournalEntry *entry = [JournalEntry findOneWhereProperty:@"id" equals:@(8) inContext:self.managedObjectContext error:nil];
+  JournalEntry *entry = [JournalEntry findFirstWhereProperty:@"id" equals:@(8) inContext:self.managedObjectContext error:nil];
   STAssertNotNil(entry, nil);
   STAssertTrue(entry.id.integerValue == 8, nil);
 }
 
-- (void)testFindOneWithoutMatch
+- (void)testFindFirstWithoutMatch
 {
-  JournalEntry *entry = [JournalEntry findOneWhereProperty:@"id" equals:@(15) inContext:self.managedObjectContext error:nil];
+  JournalEntry *entry = [JournalEntry findFirstWhereProperty:@"id" equals:@(15) inContext:self.managedObjectContext error:nil];
   STAssertNil(entry, nil);
 }
 
-- (void)testFindOneWithSimplePredicateMatching
+- (void)testFindFirstWithSimplePredicateMatching
 {
-  JournalEntry *entry = [JournalEntry findOneWithPredicate:[NSPredicate predicateWithFormat:@"title = %@", @"title 6"] inContext:self.managedObjectContext error:nil];
+  JournalEntry *entry = [JournalEntry findFirstWithPredicate:[NSPredicate predicateWithFormat:@"title = %@", @"title 6"] inContext:self.managedObjectContext error:nil];
   STAssertNotNil(entry, nil);
   STAssertTrue(entry.id.integerValue == 6, nil);
 }
 
-- (void)testFindOneWithContainsPredicateMatching
+- (void)testFindFirstWithContainsPredicateMatching
 {
-  JournalEntry *entry = [JournalEntry findOneWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '6'"] inContext:self.managedObjectContext error:nil];
+  JournalEntry *entry = [JournalEntry findFirstWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '6'"] inContext:self.managedObjectContext error:nil];
   STAssertNotNil(entry, nil);
   STAssertTrue(entry.id.integerValue == 6, nil);
 }
 
-- (void)testFindOneWithPredicateNotMatching
+- (void)testFindFirstWithPredicateNotMatching
 {
-  JournalEntry *entry = [JournalEntry findOneWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '16'"] inContext:self.managedObjectContext error:nil];
+  JournalEntry *entry = [JournalEntry findFirstWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '16'"] inContext:self.managedObjectContext error:nil];
   STAssertNil(entry, nil);
 }
 

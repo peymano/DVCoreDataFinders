@@ -59,7 +59,7 @@ static const NSUInteger kDefaultBatchSize = 50;
   return [self executeFetchRequest:request inContext:context error:errorPtr];
 }
 
-+ (id)findOneWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
++ (id)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
   NSArray *results = [self findAllWithPredicate:predicate inContext:context error:errorPtr];
 
@@ -67,17 +67,13 @@ static const NSUInteger kDefaultBatchSize = 50;
     return nil;
   }
 
-  if (results.count > 1) {
-    NSLog(@"Warning: found more than 1 object in findOneWithPredicate:inContext:error:");
-  }
-
   return results[0];
 }
 
-+ (id)findOneWhereProperty:(NSString *)propertyKey equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
++ (id)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", propertyKey, value];
-  return [self findOneWithPredicate:predicate inContext:context error:errorPtr];
+  return [self findFirstWithPredicate:predicate inContext:context error:errorPtr];
 }
 
 #pragma mark - NSFetchRequest helpers
