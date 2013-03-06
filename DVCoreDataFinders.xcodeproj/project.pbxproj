@@ -46,7 +46,6 @@
 /* Begin PBXFileReference section */
 		700A161616C96BC9007A8E71 /* libDVCoreDataFinders.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDVCoreDataFinders.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		700A161916C96BC9007A8E71 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		700A161D16C96BC9007A8E71 /* DVCoreDataFinders-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DVCoreDataFinders-Prefix.pch"; sourceTree = "<group>"; };
 		700A162716C96BC9007A8E71 /* DVCoreDataFindersTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DVCoreDataFindersTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		700A162816C96BC9007A8E71 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		700A162A16C96BC9007A8E71 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -123,17 +122,8 @@
 				700C69E216D021BE00F7CA59 /* DVCoreDataFinders.h */,
 				700A164116C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.h */,
 				700A164216C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m */,
-				700A161C16C96BC9007A8E71 /* Supporting Files */,
 			);
 			path = DVCoreDataFinders;
-			sourceTree = "<group>";
-		};
-		700A161C16C96BC9007A8E71 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				700A161D16C96BC9007A8E71 /* DVCoreDataFinders-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		700A163016C96BC9007A8E71 /* DVCoreDataFindersTests */ = {
@@ -351,7 +341,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/DVCoreDataFinders.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "DVCoreDataFinders/DVCoreDataFinders-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -363,7 +353,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/DVCoreDataFinders.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "DVCoreDataFinders/DVCoreDataFinders-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -378,7 +368,7 @@
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "DVCoreDataFinders/DVCoreDataFinders-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "DVCoreDataFindersTests/DVCoreDataFindersTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
@@ -393,7 +383,7 @@
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "DVCoreDataFinders/DVCoreDataFinders-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "DVCoreDataFindersTests/DVCoreDataFindersTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
