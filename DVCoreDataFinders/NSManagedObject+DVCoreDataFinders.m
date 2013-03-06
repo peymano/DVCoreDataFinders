@@ -86,8 +86,6 @@ static const NSUInteger kDefaultBatchSize = 50;
 + (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context
 {
   NSFetchRequest *request = [self fetchRequestInContext:context];
-
-  request.includesSubentities = NO;
   request.fetchBatchSize = kDefaultBatchSize;
 
   if (predicate) {
