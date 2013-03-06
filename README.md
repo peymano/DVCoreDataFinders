@@ -13,7 +13,7 @@ Some examples:
     NSArray *entries = [JournalEntry findAllWithPredicate:predicate inContext:self.managedObjectContext error:nil];
 
     // find the JournalEntry with id = 8
-    JournalEntry *entry = [JournalEntry findOneWhereProperty:@"id" equals:@(8) inContext:self.managedObjectContext error:nil];
+    JournalEntry *entry = [JournalEntry findFirstWhereProperty:@"id" equals:@(8) inContext:self.managedObjectContext error:nil];
 
     // insert a JournalEntry object
     JournalEntry *entity = [JournalEntry insertIntoContext:self.managedObjectContext];
@@ -36,8 +36,8 @@ All methods
     + (NSArray *)findAllInContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
     + (NSArray *)findAllWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
     + (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
-    + (id)findOneWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
-    + (id)findOneWhereProperty:(NSString *)propertyKey equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+    + (id)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+    + (id)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
     // NSFetchRequests helpers
     + (NSFetchRequest *)fetchRequestInContext:(NSManagedObjectContext *)context;
