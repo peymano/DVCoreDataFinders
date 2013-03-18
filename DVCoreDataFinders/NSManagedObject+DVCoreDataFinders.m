@@ -157,7 +157,12 @@ static const NSUInteger kDefaultBatchSize = 50;
 
 - (id)findInContext:(NSManagedObjectContext *)context;
 {
-  id object = [context objectWithID:self.objectID];
+  NSError *error;
+
+  id object = [context existingObjectWithID:self.objectID error:&error];
+  if (object == nil) {
+    object = [context objectWithID:self.objectID];
+  }
 
   // `context` may have a stale (cached) copy of the object; force a refresh
   [context refreshObject:object mergeChanges:YES];
