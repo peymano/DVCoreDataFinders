@@ -5,6 +5,8 @@
 
 #import <CoreData/CoreData.h>
 
+typedef void(^DVCoreDataFindersCreateBlock)(id createdObject);
+
 @interface NSManagedObject (DVCoreDataFinders)
 
 // Counters
@@ -29,11 +31,17 @@
 
 + (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
-// Finders: find first
+// Finders: find first with a predicate
+
++ (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate options:(NSDictionary *)options insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
 + (instancetype)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
 + (instancetype)findFirstWithPredicate:(NSPredicate *)predicate options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+
+// Finders: find first where "property = value"
+
++ (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyKey equals:(id)value options:(NSDictionary *)options insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
 + (instancetype)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 

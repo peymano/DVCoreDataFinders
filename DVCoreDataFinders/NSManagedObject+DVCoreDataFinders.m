@@ -72,6 +72,22 @@
 
 #pragma mark - Finders: find first
 
++ (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate options:(NSDictionary *)options insertBlock:(DVCoreDataFindersCreateBlock)createBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+{
+  id object = [self findFirstWithPredicate:predicate options:options inContext:context error:errorPtr];
+  if (object) {
+    return object;
+  }
+
+  object = [self insertIntoContext:context];
+
+  if (createBlock) {
+    createBlock(object);
+  }
+
+  return object;
+}
+
 + (instancetype)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
   return [self findFirstWithPredicate:predicate options:nil inContext:context error:errorPtr];
@@ -89,6 +105,12 @@
   }
 
   return results[0];
+}
+
++ (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyKey equals:(id)value options:(NSDictionary *)options insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
+{
+  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", propertyKey, value];
+  return [self findFirstOrInsertWithPredicate:predicate options:options insertBlock:insertBlock inContext:context error:errorPtr];
 }
 
 + (instancetype)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr

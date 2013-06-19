@@ -181,5 +181,49 @@
   STAssertNil(entry, nil);
 }
 
+- (void)testFindFirstOrInsertWithPredicateAndFinding
+{
+  JournalEntry *entry = [JournalEntry findFirstOrInsertWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '7'"] options:nil insertBlock:^(JournalEntry *createdObject) {
+    createdObject.id = @(17);
+    createdObject.body = @"this is 17";
+  } inContext:self.managedObjectContext error:nil];
+
+  STAssertNotNil(entry, nil);
+  STAssertTrue(entry.id.integerValue == 7, nil);
+}
+
+- (void)testFindFirstOrInsertWithPredicateAndInserting
+{
+  JournalEntry *entry = [JournalEntry findFirstOrInsertWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '17'"] options:nil insertBlock:^(JournalEntry *createdObject) {
+    createdObject.id = @(17);
+    createdObject.body = @"this is 17";
+  } inContext:self.managedObjectContext error:nil];
+
+  STAssertNotNil(entry, nil);
+  STAssertTrue(entry.id.integerValue == 17, nil);
+  STAssertEqualObjects(entry.body, @"this is 17", nil);
+}
+
+- (void)testFindFirstOrInsertWhereAndFinding
+{
+  JournalEntry *entry = [JournalEntry findFirstOrInsertWhereProperty:@"id" equals:@(7) options:nil insertBlock:^(JournalEntry *createdObject) {
+    createdObject.id = @(17);
+    createdObject.body = @"this is 17";
+  } inContext:self.managedObjectContext error:nil];
+
+  STAssertNotNil(entry, nil);
+  STAssertTrue(entry.id.integerValue == 7, nil);
+}
+
+- (void)testFindFirstOrInsertWhereAndInserting
+{
+  JournalEntry *entry = [JournalEntry findFirstOrInsertWhereProperty:@"id" equals:@(17) options:nil insertBlock:^(JournalEntry *createdObject) {
+    createdObject.id = @(17);
+    createdObject.body = @"this is 17";
+  } inContext:self.managedObjectContext error:nil];
+
+  STAssertNotNil(entry, nil);
+  STAssertTrue(entry.id.integerValue == 17, nil);
+}
 
 @end
