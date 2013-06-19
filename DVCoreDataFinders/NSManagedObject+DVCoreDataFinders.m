@@ -6,8 +6,6 @@
 #import "NSManagedObject+DVCoreDataFinders.h"
 
 
-static const NSUInteger kDefaultBatchSize = 50;
-
 @implementation NSManagedObject (DVCoreDataFinders)
 
 #pragma mark - Counters
@@ -34,34 +32,54 @@ static const NSUInteger kDefaultBatchSize = 50;
   return [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
 }
 
-#pragma mark - Finders
-
-+ (NSArray *)executeFetchRequest:(NSFetchRequest *)request inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
-{
-  return [context executeFetchRequest:request error:errorPtr];
-}
+#pragma mark - Finders: find all
 
 + (NSArray *)findAllInContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
-  NSFetchRequest *fetchRequest = [self fetchRequestInContext:context];
-  return [self executeFetchRequest:fetchRequest inContext:context error:errorPtr];
+  NSFetchRequest *fetchRequest = [self fetchRequestWithOptions:nil inContext:context];
+  return [context executeFetchRequest:fetchRequest error:errorPtr];
 }
 
 + (NSArray *)findAllWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
   NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortedBy:nil ascending:YES inContext:context];
-  return [self executeFetchRequest:request inContext:context error:errorPtr];
+  return [context executeFetchRequest:request error:errorPtr];
+}
+
++ (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
+{
+  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:options inContext:context];
+  return [context executeFetchRequest:request error:errorPtr];
 }
 
 + (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
-  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortedBy:sortBy ascending:ascending inContext:context];
-  return [self executeFetchRequest:request inContext:context error:errorPtr];
+  return [self findAllWithPredicate:predicate sortedBy:sortBy ascending:ascending options:nil inContext:context error:errorPtr];
 }
+
++ (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
+{
+  NSArray *sortDescriptors = nil;
+
+  if (sortBy) {
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortBy ascending:ascending];
+    sortDescriptors = @[ sortDescriptor ];
+  }
+
+  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:options inContext:context];
+  return [context executeFetchRequest:request error:errorPtr];
+}
+
+#pragma mark - Finders: find first
 
 + (id)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
-  NSArray *results = [self findAllWithPredicate:predicate inContext:context error:errorPtr];
+  return [self findFirstWithPredicate:predicate options:nil inContext:context error:errorPtr];
+}
+
++ (id)findFirstWithPredicate:(NSPredicate *)predicate options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
+{
+  NSArray *results = [self findAllWithPredicate:predicate sortedBy:nil ascending:YES options:options inContext:context error:errorPtr];
 
   if (results == nil || results.count == 0) {
     return nil;
@@ -72,21 +90,83 @@ static const NSUInteger kDefaultBatchSize = 50;
 
 + (id)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
+  return [self findFirstWhereProperty:propertyKey equals:value options:nil inContext:context error:errorPtr];
+}
+
++ (id)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
+{
   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", propertyKey, value];
-  return [self findFirstWithPredicate:predicate inContext:context error:errorPtr];
+  return [self findFirstWithPredicate:predicate options:options inContext:context error:errorPtr];
 }
 
 #pragma mark - NSFetchRequest helpers
 
 + (NSFetchRequest *)fetchRequestInContext:(NSManagedObjectContext *)context
 {
-  return [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass(self.class)];
+  return [self fetchRequestWithOptions:nil inContext:context];
+}
+
++ (NSFetchRequest *)fetchRequestWithOptions:(NSDictionary *)options inContext:(NSManagedObjectContext *)context
+{
+  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass(self.class)];
+
+  if (options == nil) {
+    return fetchRequest;
+  }
+
+  id value;
+
+  if ((value = options[@"fetchBatchSize"])) {
+    fetchRequest.fetchBatchSize = [value unsignedIntegerValue];
+  }
+
+  if ((value = options[@"fetchLimit"])) {
+    fetchRequest.fetchLimit = [value unsignedIntegerValue];
+  }
+
+  if ((value = options[@"fetchOffset"])) {
+    fetchRequest.fetchOffset = [value unsignedIntegerValue];
+  }
+
+  if ((value = options[@"includesPendingChanges"])) {
+    fetchRequest.includesPendingChanges = [value boolValue];
+  }
+
+  if ((value = options[@"includesPropertyValues"])) {
+    fetchRequest.includesPropertyValues = [value boolValue];
+  }
+
+  if ((value = options[@"propertiesToFetch"])) {
+    fetchRequest.propertiesToFetch = value;
+  }
+
+  if ((value = options[@"returnsDistinctResults"])) {
+    fetchRequest.returnsDistinctResults = [value boolValue];
+  }
+
+  if ((value = options[@"resultType"])) {
+    fetchRequest.resultType = [value unsignedIntegerValue];
+  }
+
+  if ((value = options[@"returnsObjectsAsFaults"])) {
+    fetchRequest.returnsObjectsAsFaults = [value boolValue];
+  }
+
+  if ((value = options[@"shouldRefreshRefetchedObjects"])) {
+    fetchRequest.shouldRefreshRefetchedObjects = [value boolValue];
+  }
+
+  return fetchRequest;
 }
 
 + (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context
 {
-  NSFetchRequest *request = [self fetchRequestInContext:context];
-  request.fetchBatchSize = kDefaultBatchSize;
+  return [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:nil inContext:context];
+}
+
++ (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context
+{
+  NSFetchRequest *request = [self fetchRequestWithOptions:options inContext:context];
 
   if (predicate) {
     request.predicate = predicate;
@@ -108,10 +188,10 @@ static const NSUInteger kDefaultBatchSize = 50;
     sortDescriptors = @[ sortDescriptor ];
   }
 
-  return [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors inContext:context];
+  return [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:nil inContext:context];
 }
 
-#pragma mark - NSFetchRequestController helpers
+#pragma mark - NSFetchedResultsController helpers
 
 + (NSFetchedResultsController *)fetchResultsControllerWithFetchRequest:(NSFetchRequest *)request sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context
 {
@@ -120,7 +200,7 @@ static const NSUInteger kDefaultBatchSize = 50;
 
 + (NSFetchedResultsController *)fetchResultsControllerWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context
 {
-  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors inContext:context];
+  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:nil inContext:context];
 
   NSFetchedResultsController *controller = [self fetchResultsControllerWithFetchRequest:request sectionNameKeyPath:nil inContext:context];
 
@@ -138,7 +218,12 @@ static const NSUInteger kDefaultBatchSize = 50;
 
 + (NSFetchedResultsController *)fetchResultsControllerWithSectionNameKeyPath:(NSString *)keyPath predicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context
 {
-  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors inContext:context];
+  return [self fetchResultsControllerWithSectionNameKeyPath:keyPath predicate:predicate sortDescriptors:sortDescriptors options:nil inContext:context];
+}
+
++ (NSFetchedResultsController *)fetchResultsControllerWithSectionNameKeyPath:(NSString *)keyPath predicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context
+{
+  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:options inContext:context];
 
   NSFetchedResultsController *controller = [self fetchResultsControllerWithFetchRequest:request sectionNameKeyPath:keyPath inContext:context];
 

@@ -85,6 +85,8 @@
   return [NSURL fileURLWithPath:NSTemporaryDirectory()];
 }
 
+#pragma mark - Test setup & tear down
+
 - (void)setUp
 {
   [super setUp];
@@ -109,6 +111,8 @@
   [super tearDown];
 }
 
+#pragma mark - Tests
+
 - (void)testFindAll
 {
   NSArray *entries = [JournalEntry findAllInContext:self.managedObjectContext error:nil];
@@ -118,6 +122,23 @@
 - (void)testFindAllWithPredicate
 {
   NSArray *entries = [JournalEntry findAllWithPredicate:[NSPredicate predicateWithFormat:@"id >= 5"] inContext:self.managedObjectContext error:nil];
+  STAssertTrue(entries.count == 5, nil);
+}
+
+- (void)testFindAllExcludingPendingChanges
+{
+  JournalEntry *journalEntry = [JournalEntry insertIntoContext:self.managedObjectContext];
+  journalEntry.id = @(100);
+
+  NSArray *entries;
+  NSError *error;
+
+  // default is includesPendingChanges=YES
+  entries = [JournalEntry findAllWithPredicate:[NSPredicate predicateWithFormat:@"id >= 5"] sortDescriptors:nil options:nil inContext:self.managedObjectContext error:&error];
+  STAssertTrue(entries.count == 6, nil);
+
+  // with includesPendingChanges=NO
+  entries = [JournalEntry findAllWithPredicate:[NSPredicate predicateWithFormat:@"id >= 5"] sortDescriptors:nil options:@{@"includesPendingChanges": @NO} inContext:self.managedObjectContext error:&error];
   STAssertTrue(entries.count == 5, nil);
 }
 
