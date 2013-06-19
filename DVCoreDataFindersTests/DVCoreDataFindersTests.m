@@ -133,12 +133,13 @@
   NSArray *entries;
   NSError *error;
 
-  // default is includesPendingChanges=YES
-  entries = [JournalEntry findAllWithPredicate:[NSPredicate predicateWithFormat:@"id >= 5"] sortDescriptors:nil options:nil inContext:self.managedObjectContext error:&error];
+  entries = [JournalEntry findAllWithPredicate:[NSPredicate predicateWithFormat:@"id >= 5"] sortDescriptors:nil inContext:self.managedObjectContext error:&error];
   STAssertTrue(entries.count == 6, nil);
 
   // with includesPendingChanges=NO
-  entries = [JournalEntry findAllWithPredicate:[NSPredicate predicateWithFormat:@"id >= 5"] sortDescriptors:nil options:@{@"includesPendingChanges": @NO} inContext:self.managedObjectContext error:&error];
+  NSFetchRequest *fetchRequest = [JournalEntry fetchRequestWithPredicate:[NSPredicate predicateWithFormat:@"id >= 5"]];
+  fetchRequest.includesPendingChanges = NO;
+  entries = [JournalEntry findAllWithFetchRequest:fetchRequest inContext:self.managedObjectContext error:nil];
   STAssertTrue(entries.count == 5, nil);
 }
 
@@ -183,7 +184,7 @@
 
 - (void)testFindFirstOrInsertWithPredicateAndFinding
 {
-  JournalEntry *entry = [JournalEntry findFirstOrInsertWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '7'"] options:nil insertBlock:^(JournalEntry *createdObject) {
+  JournalEntry *entry = [JournalEntry findFirstOrInsertWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '7'"] insertBlock:^(JournalEntry *createdObject) {
     createdObject.id = @(17);
     createdObject.body = @"this is 17";
   } inContext:self.managedObjectContext error:nil];
@@ -194,7 +195,7 @@
 
 - (void)testFindFirstOrInsertWithPredicateAndInserting
 {
-  JournalEntry *entry = [JournalEntry findFirstOrInsertWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '17'"] options:nil insertBlock:^(JournalEntry *createdObject) {
+  JournalEntry *entry = [JournalEntry findFirstOrInsertWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '17'"] insertBlock:^(JournalEntry *createdObject) {
     createdObject.id = @(17);
     createdObject.body = @"this is 17";
   } inContext:self.managedObjectContext error:nil];
@@ -206,7 +207,7 @@
 
 - (void)testFindFirstOrInsertWhereAndFinding
 {
-  JournalEntry *entry = [JournalEntry findFirstOrInsertWhereProperty:@"id" equals:@(7) options:nil insertBlock:^(JournalEntry *createdObject) {
+  JournalEntry *entry = [JournalEntry findFirstOrInsertWhereProperty:@"id" equals:@(7) insertBlock:^(JournalEntry *createdObject) {
     createdObject.id = @(17);
     createdObject.body = @"this is 17";
   } inContext:self.managedObjectContext error:nil];
@@ -217,7 +218,7 @@
 
 - (void)testFindFirstOrInsertWhereAndInserting
 {
-  JournalEntry *entry = [JournalEntry findFirstOrInsertWhereProperty:@"id" equals:@(17) options:nil insertBlock:^(JournalEntry *createdObject) {
+  JournalEntry *entry = [JournalEntry findFirstOrInsertWhereProperty:@"id" equals:@(17) insertBlock:^(JournalEntry *createdObject) {
     createdObject.id = @(17);
     createdObject.body = @"this is 17";
   } inContext:self.managedObjectContext error:nil];

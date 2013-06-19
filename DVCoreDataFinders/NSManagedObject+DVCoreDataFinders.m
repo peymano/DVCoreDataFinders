@@ -17,7 +17,7 @@
 
 + (NSUInteger)countAllWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
-  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortedBy:nil ascending:YES inContext:context];
+  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortedBy:nil ascending:YES];
 
   NSUInteger count = [context countForFetchRequest:request error:errorPtr];
 
@@ -36,28 +36,28 @@
 
 + (NSArray *)findAllInContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
-  NSFetchRequest *fetchRequest = [self fetchRequestWithOptions:nil inContext:context];
+  NSFetchRequest *fetchRequest = [self fetchRequest];
+  return [context executeFetchRequest:fetchRequest error:errorPtr];
+}
+
++ (NSArray *)findAllWithFetchRequest:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
+{
   return [context executeFetchRequest:fetchRequest error:errorPtr];
 }
 
 + (NSArray *)findAllWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
-  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortedBy:nil ascending:YES inContext:context];
+  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortedBy:nil ascending:YES];
   return [context executeFetchRequest:request error:errorPtr];
 }
 
-+ (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
++ (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 {
-  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:options inContext:context];
-  return [context executeFetchRequest:request error:errorPtr];
+  NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors];
+  return [context executeFetchRequest:fetchRequest error:errorPtr];
 }
 
 + (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
-{
-  return [self findAllWithPredicate:predicate sortedBy:sortBy ascending:ascending options:nil inContext:context error:errorPtr];
-}
-
-+ (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
   NSArray *sortDescriptors = nil;
 
@@ -66,15 +66,28 @@
     sortDescriptors = @[ sortDescriptor ];
   }
 
-  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:options inContext:context];
+  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors];
   return [context executeFetchRequest:request error:errorPtr];
 }
 
-#pragma mark - Finders: find first
+#pragma mark - Finders: find first with a fetch request
 
-+ (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate options:(NSDictionary *)options insertBlock:(DVCoreDataFindersCreateBlock)createBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstWithFetchRequest:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 {
-  id object = [self findFirstWithPredicate:predicate options:options inContext:context error:errorPtr];
+  NSArray *results = [context executeFetchRequest:fetchRequest error:errorPtr];
+
+  if (results == nil || results.count == 0) {
+    return nil;
+  }
+
+  return results[0];
+}
+
+#pragma mark - Finders: find first with a predicate
+
++ (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate insertBlock:(DVCoreDataFindersCreateBlock)createBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+{
+  id object = [self findFirstWithPredicate:predicate inContext:context error:errorPtr];
   if (object) {
     return object;
   }
@@ -90,108 +103,42 @@
 
 + (instancetype)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
-  return [self findFirstWithPredicate:predicate options:nil inContext:context error:errorPtr];
-}
+  NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate sortDescriptors:nil];
 
-+ (instancetype)findFirstWithPredicate:(NSPredicate *)predicate options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
-{
-  NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate sortDescriptors:nil options:options inContext:context];
   fetchRequest.fetchLimit = 1;
 
-  NSArray *results = [context executeFetchRequest:fetchRequest error:errorPtr];
-
-  if (results == nil || results.count == 0) {
-    return nil;
-  }
-
-  return results[0];
+  return [self findFirstWithFetchRequest:fetchRequest inContext:context error:errorPtr];
 }
 
-+ (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyKey equals:(id)value options:(NSDictionary *)options insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
+#pragma mark - find first where "property = value"
+
++ (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyName equals:(id)value insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
-  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", propertyKey, value];
-  return [self findFirstOrInsertWithPredicate:predicate options:options insertBlock:insertBlock inContext:context error:errorPtr];
+  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", propertyName, value];
+  return [self findFirstOrInsertWithPredicate:predicate insertBlock:insertBlock inContext:context error:errorPtr];
 }
 
-+ (instancetype)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
++ (instancetype)findFirstWhereProperty:(NSString *)propertyName equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
-  return [self findFirstWhereProperty:propertyKey equals:value options:nil inContext:context error:errorPtr];
-}
-
-+ (instancetype)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
-{
-  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", propertyKey, value];
-  return [self findFirstWithPredicate:predicate options:options inContext:context error:errorPtr];
+  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", propertyName, value];
+  return [self findFirstWithPredicate:predicate inContext:context error:errorPtr];
 }
 
 #pragma mark - NSFetchRequest helpers
 
-+ (NSFetchRequest *)fetchRequestInContext:(NSManagedObjectContext *)context
++ (NSFetchRequest *)fetchRequest
 {
-  return [self fetchRequestWithOptions:nil inContext:context];
+  return [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass(self.class)];
 }
 
-+ (NSFetchRequest *)fetchRequestWithOptions:(NSDictionary *)options inContext:(NSManagedObjectContext *)context
++ (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate
 {
-  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass(self.class)];
-
-  if (options == nil) {
-    return fetchRequest;
-  }
-
-  id value;
-
-  if ((value = options[@"fetchBatchSize"])) {
-    fetchRequest.fetchBatchSize = [value unsignedIntegerValue];
-  }
-
-  if ((value = options[@"fetchLimit"])) {
-    fetchRequest.fetchLimit = [value unsignedIntegerValue];
-  }
-
-  if ((value = options[@"fetchOffset"])) {
-    fetchRequest.fetchOffset = [value unsignedIntegerValue];
-  }
-
-  if ((value = options[@"includesPendingChanges"])) {
-    fetchRequest.includesPendingChanges = [value boolValue];
-  }
-
-  if ((value = options[@"includesPropertyValues"])) {
-    fetchRequest.includesPropertyValues = [value boolValue];
-  }
-
-  if ((value = options[@"propertiesToFetch"])) {
-    fetchRequest.propertiesToFetch = value;
-  }
-
-  if ((value = options[@"returnsDistinctResults"])) {
-    fetchRequest.returnsDistinctResults = [value boolValue];
-  }
-
-  if ((value = options[@"resultType"])) {
-    fetchRequest.resultType = [value unsignedIntegerValue];
-  }
-
-  if ((value = options[@"returnsObjectsAsFaults"])) {
-    fetchRequest.returnsObjectsAsFaults = [value boolValue];
-  }
-
-  if ((value = options[@"shouldRefreshRefetchedObjects"])) {
-    fetchRequest.shouldRefreshRefetchedObjects = [value boolValue];
-  }
-
-  return fetchRequest;
+  return [self fetchRequestWithPredicate:predicate sortDescriptors:nil];
 }
 
-+ (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context
++ (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors
 {
-  return [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:nil inContext:context];
-}
-
-+ (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context
-{
-  NSFetchRequest *request = [self fetchRequestWithOptions:options inContext:context];
+  NSFetchRequest *request = [self fetchRequest];
 
   if (predicate) {
     request.predicate = predicate;
@@ -204,7 +151,7 @@
   return request;
 }
 
-+ (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context
++ (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending
 {
   NSArray *sortDescriptors = nil;
 
@@ -213,44 +160,39 @@
     sortDescriptors = @[ sortDescriptor ];
   }
 
-  return [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:nil inContext:context];
+  return [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors];
 }
 
 #pragma mark - NSFetchedResultsController helpers
 
-+ (NSFetchedResultsController *)fetchedResultsControllerWithFetchRequest:(NSFetchRequest *)request sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context
++ (NSFetchedResultsController *)fetchedResultsControllerWithFetchRequest:(NSFetchRequest *)fetchRequest sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context
 {
-  return [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:keyPath cacheName:nil];
+  return [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:keyPath cacheName:nil];
 }
 
 + (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context
 {
-  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:nil inContext:context];
+  NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors];
 
-  NSFetchedResultsController *controller = [self fetchedResultsControllerWithFetchRequest:request sectionNameKeyPath:nil inContext:context];
+  NSFetchedResultsController *controller = [self fetchedResultsControllerWithFetchRequest:fetchRequest sectionNameKeyPath:nil inContext:context];
 
   return controller;
 }
 
 + (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context
 {
-  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortedBy:sortedBy ascending:ascending inContext:context];
+  NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate sortedBy:sortedBy ascending:ascending];
 
-  NSFetchedResultsController *controller = [self fetchedResultsControllerWithFetchRequest:request sectionNameKeyPath:nil inContext:context];
+  NSFetchedResultsController *controller = [self fetchedResultsControllerWithFetchRequest:fetchRequest sectionNameKeyPath:nil inContext:context];
 
   return controller;
 }
 
-+ (NSFetchedResultsController *)fetchedResultsControllerWithSectionNameKeyPath:(NSString *)keyPath predicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context
++ (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context
 {
-  return [self fetchedResultsControllerWithSectionNameKeyPath:keyPath predicate:predicate sortDescriptors:sortDescriptors options:nil inContext:context];
-}
+  NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors];
 
-+ (NSFetchedResultsController *)fetchedResultsControllerWithSectionNameKeyPath:(NSString *)keyPath predicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context
-{
-  NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:options inContext:context];
-
-  NSFetchedResultsController *controller = [self fetchedResultsControllerWithFetchRequest:request sectionNameKeyPath:keyPath inContext:context];
+  NSFetchedResultsController *controller = [self fetchedResultsControllerWithFetchRequest:fetchRequest sectionNameKeyPath:keyPath inContext:context];
 
   return controller;
 }
