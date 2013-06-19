@@ -31,13 +31,13 @@
 
 // Finders: find first
 
-+ (id)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
-+ (id)findFirstWithPredicate:(NSPredicate *)predicate options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstWithPredicate:(NSPredicate *)predicate options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
-+ (id)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
-+ (id)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
 // NSFetchRequests helpers
 
@@ -65,10 +65,10 @@
 
 // NSManagedObject helpers
 
-+ (id)insertIntoContext:(NSManagedObjectContext *)context;
++ (instancetype)insertIntoContext:(NSManagedObjectContext *)context;
 
 // Instance methods
 
-- (id)findInContext:(NSManagedObjectContext *)context;
+- (instancetype)findInContext:(NSManagedObjectContext *)context;
 
 @end
