@@ -79,7 +79,10 @@
 
 + (instancetype)findFirstWithPredicate:(NSPredicate *)predicate options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
-  NSArray *results = [self findAllWithPredicate:predicate sortedBy:nil ascending:YES options:options inContext:context error:errorPtr];
+  NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate sortDescriptors:nil options:options inContext:context];
+  fetchRequest.fetchLimit = 1;
+
+  NSArray *results = [context executeFetchRequest:fetchRequest error:errorPtr];
 
   if (results == nil || results.count == 0) {
     return nil;
