@@ -1,0 +1,19 @@
+CHANGES
+
+= 0.4 (2013-06-19)
+
+A few breaking API changes:
+
+* rename `fetchResultsController...` to `fetchedResultsController...` (adding "ed" to "fetch" for consistency with Core Data)
+
+* rename `fetchedResultsControllerWithSectionNameKeyPath:...` to `fetchedResultsControllerWithPredicate:sortDescriptors:sectionNameKeyPath:inContext:` (moving the key path to the end)
+
+* for all "fetchRequest..." methods, remove the "inContext:" parameter (it was unused)
+
+New stuff:
+
+* added variants that take a `NSFetchRequest` for situations where you want to set custom options, like `includePendingChanges`, `fetchBatchSize`, `fetchLimit`, etc.
+
+* added `findFirstOrInsert…` methods: if there are no matching objects, a new object is inserted into the context and `insertBlock`, if provided, is invoked
+
+* change the return type for methods return `id` to `instancetype` for type-checking goodness
