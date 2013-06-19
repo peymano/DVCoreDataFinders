@@ -193,39 +193,39 @@
 
 #pragma mark - NSFetchedResultsController helpers
 
-+ (NSFetchedResultsController *)fetchResultsControllerWithFetchRequest:(NSFetchRequest *)request sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context
++ (NSFetchedResultsController *)fetchedResultsControllerWithFetchRequest:(NSFetchRequest *)request sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context
 {
   return [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:keyPath cacheName:nil];
 }
 
-+ (NSFetchedResultsController *)fetchResultsControllerWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context
++ (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context
 {
   NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:nil inContext:context];
 
-  NSFetchedResultsController *controller = [self fetchResultsControllerWithFetchRequest:request sectionNameKeyPath:nil inContext:context];
+  NSFetchedResultsController *controller = [self fetchedResultsControllerWithFetchRequest:request sectionNameKeyPath:nil inContext:context];
 
   return controller;
 }
 
-+ (NSFetchedResultsController *)fetchResultsControllerWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context
++ (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context
 {
   NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortedBy:sortedBy ascending:ascending inContext:context];
 
-  NSFetchedResultsController *controller = [self fetchResultsControllerWithFetchRequest:request sectionNameKeyPath:nil inContext:context];
+  NSFetchedResultsController *controller = [self fetchedResultsControllerWithFetchRequest:request sectionNameKeyPath:nil inContext:context];
 
   return controller;
 }
 
-+ (NSFetchedResultsController *)fetchResultsControllerWithSectionNameKeyPath:(NSString *)keyPath predicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context
++ (NSFetchedResultsController *)fetchedResultsControllerWithSectionNameKeyPath:(NSString *)keyPath predicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context
 {
-  return [self fetchResultsControllerWithSectionNameKeyPath:keyPath predicate:predicate sortDescriptors:sortDescriptors options:nil inContext:context];
+  return [self fetchedResultsControllerWithSectionNameKeyPath:keyPath predicate:predicate sortDescriptors:sortDescriptors options:nil inContext:context];
 }
 
-+ (NSFetchedResultsController *)fetchResultsControllerWithSectionNameKeyPath:(NSString *)keyPath predicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context
++ (NSFetchedResultsController *)fetchedResultsControllerWithSectionNameKeyPath:(NSString *)keyPath predicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors options:(NSDictionary *)options inContext:(NSManagedObjectContext *)context
 {
   NSFetchRequest *request = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors options:options inContext:context];
 
-  NSFetchedResultsController *controller = [self fetchResultsControllerWithFetchRequest:request sectionNameKeyPath:keyPath inContext:context];
+  NSFetchedResultsController *controller = [self fetchedResultsControllerWithFetchRequest:request sectionNameKeyPath:keyPath inContext:context];
 
   return controller;
 }
