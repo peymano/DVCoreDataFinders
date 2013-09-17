@@ -93,13 +93,16 @@
 
   for (int i = 0; i < 10; i++) {
     JournalEntry *entity = [JournalEntry insertIntoContext:self.managedObjectContext];
-    entity.title = [NSString stringWithFormat:@"title %d", i];
     entity.body = [NSString stringWithFormat:@"description %d", i];
     entity.createdAt = [NSDate date];
     entity.id = @(i);
+    entity.isTombstone = (i % 2) ? @YES : @NO;
+    entity.title = [NSString stringWithFormat:@"title %d", i];
   }
 
   [self.managedObjectContext save:nil];
+
+  [JournalEntry setGlobalFilterPredicate:nil];
 }
 
 - (void)tearDown
@@ -111,7 +114,7 @@
   [super tearDown];
 }
 
-#pragma mark - Tests
+#pragma mark - Find all tests
 
 - (void)testFindAll
 {
@@ -149,6 +152,8 @@
   STAssertTrue(entries.count == 0, nil);
 }
 
+#pragma mark - Find first tests
+
 - (void)testFindFirst
 {
   JournalEntry *entry = [JournalEntry findFirstWhereProperty:@"id" equals:@(8) inContext:self.managedObjectContext error:nil];
@@ -181,6 +186,8 @@
   JournalEntry *entry = [JournalEntry findFirstWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '16'"] inContext:self.managedObjectContext error:nil];
   STAssertNil(entry, nil);
 }
+
+#pragma mark - Find first or insert tests
 
 - (void)testFindFirstOrInsertWithPredicateAndFinding
 {
@@ -225,6 +232,66 @@
 
   STAssertNotNil(entry, nil);
   STAssertTrue(entry.id.integerValue == 17, nil);
+}
+
+#pragma mark - Global filter predicate tests
+
+- (void)setGlobalFilterPredicate
+{
+  NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"isTombstone = NO"];
+  [JournalEntry setGlobalFilterPredicate:filterPredicate];
+}
+
+- (void)testGlobalFilterPredicateWithFindAll
+{
+  [self setGlobalFilterPredicate];
+
+  NSArray *results = [JournalEntry findAllInContext:self.managedObjectContext error:nil];
+  STAssertTrue(results.count == 5, nil);
+}
+
+- (void)testGlobalFilterPredicateWithFindAllWithPredicate
+{
+  [self setGlobalFilterPredicate];
+
+  NSArray *entries = [JournalEntry findAllWithPredicate:[NSPredicate predicateWithFormat:@"id >= 5"] inContext:self.managedObjectContext error:nil];
+  STAssertTrue(entries.count == 2, nil);
+
+  [entries enumerateObjectsUsingBlock:^(JournalEntry *journalEntry, NSUInteger idx, BOOL *stop) {
+    STAssertTrue(journalEntry.isTombstone.boolValue == NO, nil);
+  }];
+}
+
+- (void)testGlobalFilterPredicateWithFindAllWithFetchRequest
+{
+  [self setGlobalFilterPredicate];
+
+  // test using `fetchRequestWithPredicate:`
+  NSFetchRequest *fetchRequest = [JournalEntry fetchRequestWithPredicate:[NSPredicate predicateWithFormat:@"id >= 7"]];
+  NSArray *entries = [JournalEntry findAllWithFetchRequest:fetchRequest inContext:self.managedObjectContext error:nil];
+  STAssertTrue(entries.count == 1, nil);
+
+  // test using `[NSFetchRequest alloc] initWithEntityName:`
+  NSFetchRequest *fetchRequest2 = [[NSFetchRequest alloc] initWithEntityName:@"JournalEntry"];
+  fetchRequest2.predicate = [NSPredicate predicateWithFormat:@"id >= 7"];
+  NSArray *entries2 = [JournalEntry findAllWithFetchRequest:fetchRequest2 inContext:self.managedObjectContext error:nil];
+  STAssertTrue(entries2.count == 1, nil);
+}
+
+- (void)testGlobalFilterPredicateWithFindFirstWithPredicate
+{
+  [self setGlobalFilterPredicate];
+
+  // object found
+
+  JournalEntry *entry = [JournalEntry findFirstWithPredicate:[NSPredicate predicateWithFormat:@"title = %@", @"title 6"] inContext:self.managedObjectContext error:nil];
+  STAssertNotNil(entry, nil);
+  STAssertTrue(entry.id.integerValue == 6, nil);
+
+  // object not found
+
+  JournalEntry *entry2 = [JournalEntry findFirstWithPredicate:[NSPredicate predicateWithFormat:@"title = %@", @"title 7"] inContext:self.managedObjectContext error:nil];
+  STAssertNil(entry2, nil);
 }
 
 @end

@@ -5,6 +5,11 @@
 
 #import "NSManagedObject+DVCoreDataFinders.h"
 
+static NSPredicate *_globalFilterPredicate = nil;
+
+//
+// All methods except those beginning with "_" add the global filter predicate to the query.
+//
 
 @implementation NSManagedObject (DVCoreDataFinders)
 
@@ -42,6 +47,7 @@
 
 + (NSArray *)findAllWithFetchRequest:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
+  fetchRequest = [self fetchRequestByAddingGlobalFilterPredicateToFetchRequest:fetchRequest];
   return [context executeFetchRequest:fetchRequest error:errorPtr];
 }
 
@@ -72,7 +78,7 @@
 
 #pragma mark - Finders: find first with a fetch request
 
-+ (instancetype)findFirstWithFetchRequest:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)_firstResultFromFetchRequest:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 {
   NSArray *results = [context executeFetchRequest:fetchRequest error:errorPtr];
 
@@ -81,6 +87,12 @@
   }
 
   return results[0];
+}
+
++ (instancetype)findFirstWithFetchRequest:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+{
+  fetchRequest = [self fetchRequestByAddingGlobalFilterPredicateToFetchRequest:fetchRequest];
+  return [self _firstResultFromFetchRequest:fetchRequest inContext:context error:errorPtr];
 }
 
 #pragma mark - Finders: find first with a predicate
@@ -104,10 +116,9 @@
 + (instancetype)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
   NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate sortDescriptors:nil];
-
   fetchRequest.fetchLimit = 1;
 
-  return [self findFirstWithFetchRequest:fetchRequest inContext:context error:errorPtr];
+  return [self _firstResultFromFetchRequest:fetchRequest inContext:context error:errorPtr];
 }
 
 #pragma mark - find first where "property = value"
@@ -128,7 +139,28 @@
 
 + (NSFetchRequest *)fetchRequest
 {
-  return [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass(self.class)];
+  return [self fetchRequestWithPredicate:nil sortDescriptors:nil];
+}
+
++ (NSFetchRequest *)fetchRequestByAddingGlobalFilterPredicateToFetchRequest:(NSFetchRequest *)fetchRequest
+{
+  // If a gloabl filter predicate is set, add it to the fetchRequest's predicate
+
+  if (_globalFilterPredicate == nil) {
+    return fetchRequest;
+  }
+
+  NSMutableArray *predicates = [NSMutableArray array];
+
+  if (fetchRequest.predicate) {
+    [predicates addObject:fetchRequest.predicate];
+  }
+
+  [predicates addObject:_globalFilterPredicate];
+
+  fetchRequest = [fetchRequest copy];
+  fetchRequest.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+  return fetchRequest;
 }
 
 + (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate
@@ -138,10 +170,20 @@
 
 + (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors
 {
-  NSFetchRequest *request = [self fetchRequest];
+  NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass(self.class)];
+
+  NSMutableArray *predicates = [NSMutableArray array];
 
   if (predicate) {
-    request.predicate = predicate;
+    [predicates addObject:predicate];
+  }
+
+  if (_globalFilterPredicate) {
+    [predicates addObject:_globalFilterPredicate];
+  }
+
+  if (predicates.count > 0) {
+    request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
   }
 
   if (sortDescriptors) {
@@ -167,6 +209,7 @@
 
 + (NSFetchedResultsController *)fetchedResultsControllerWithFetchRequest:(NSFetchRequest *)fetchRequest sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context
 {
+  fetchRequest = [self fetchRequestByAddingGlobalFilterPredicateToFetchRequest:fetchRequest];
   return [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:keyPath cacheName:nil];
 }
 
@@ -174,27 +217,33 @@
 {
   NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors];
 
-  NSFetchedResultsController *controller = [self fetchedResultsControllerWithFetchRequest:fetchRequest sectionNameKeyPath:nil inContext:context];
-
-  return controller;
+  return [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
 }
 
 + (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context
 {
   NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate sortedBy:sortedBy ascending:ascending];
 
-  NSFetchedResultsController *controller = [self fetchedResultsControllerWithFetchRequest:fetchRequest sectionNameKeyPath:nil inContext:context];
-
-  return controller;
+  return [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
 }
 
 + (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context
 {
   NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate sortDescriptors:sortDescriptors];
 
-  NSFetchedResultsController *controller = [self fetchedResultsControllerWithFetchRequest:fetchRequest sectionNameKeyPath:keyPath inContext:context];
+  return [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:keyPath cacheName:nil];
+}
 
-  return controller;
+#pragma mark - Global predicate
+
++ (NSPredicate *)globalFilterPredicate
+{
+  return _globalFilterPredicate;
+}
+
++ (void)setGlobalFilterPredicate:(NSPredicate *)predicate
+{
+  _globalFilterPredicate = [predicate copy];
 }
 
 #pragma mark - NSManagedObject helpers

@@ -17,8 +17,8 @@
 		700A164316C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m in Sources */ = {isa = PBXBuildFile; fileRef = 700A164216C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m */; };
 		700A164416C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m in Sources */ = {isa = PBXBuildFile; fileRef = 700A164216C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m */; };
 		700A164616C972C3007A8E71 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A164516C972C3007A8E71 /* CoreData.framework */; };
-		700A164C16C97466007A8E71 /* JournalEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 700A164B16C97466007A8E71 /* JournalEntry.m */; };
 		700A164E16C9790F007A8E71 /* Tests.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 700A164716C97408007A8E71 /* Tests.xcdatamodeld */; };
+		70EFE43817E8FBA9009AF343 /* JournalEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EFE43717E8FBA8009AF343 /* JournalEntry.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,9 +57,9 @@
 		700A164216C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+DVCoreDataFinders.m"; sourceTree = "<group>"; };
 		700A164516C972C3007A8E71 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		700A164816C97408007A8E71 /* Tests.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tests.xcdatamodel; sourceTree = "<group>"; };
-		700A164A16C97466007A8E71 /* JournalEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JournalEntry.h; sourceTree = "<group>"; };
-		700A164B16C97466007A8E71 /* JournalEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalEntry.m; sourceTree = "<group>"; };
 		700C69E216D021BE00F7CA59 /* DVCoreDataFinders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVCoreDataFinders.h; sourceTree = "<group>"; };
+		70EFE43617E8FBA8009AF343 /* JournalEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JournalEntry.h; sourceTree = "<group>"; };
+		70EFE43717E8FBA8009AF343 /* JournalEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalEntry.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,9 +141,9 @@
 			children = (
 				700A163216C96BC9007A8E71 /* DVCoreDataFindersTests-Info.plist */,
 				700A163316C96BC9007A8E71 /* InfoPlist.strings */,
-				700A164A16C97466007A8E71 /* JournalEntry.h */,
-				700A164B16C97466007A8E71 /* JournalEntry.m */,
 				700A164716C97408007A8E71 /* Tests.xcdatamodeld */,
+				70EFE43617E8FBA8009AF343 /* JournalEntry.h */,
+				70EFE43717E8FBA8009AF343 /* JournalEntry.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -257,7 +257,7 @@
 				700A164E16C9790F007A8E71 /* Tests.xcdatamodeld in Sources */,
 				700A163816C96BC9007A8E71 /* DVCoreDataFindersTests.m in Sources */,
 				700A164416C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m in Sources */,
-				700A164C16C97466007A8E71 /* JournalEntry.m in Sources */,
+				70EFE43817E8FBA9009AF343 /* JournalEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

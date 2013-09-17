@@ -67,6 +67,12 @@ typedef void(^DVCoreDataFindersCreateBlock)(id createdObject);
 
 + (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context;
 
+// Global filter predicate: if set, the global predicate is automatically added to all queries, all fetch requests, all fetched results controllers, etc.
+
++ (NSPredicate *)globalFilterPredicate;
+
++ (void)setGlobalFilterPredicate:(NSPredicate *)predicate;
+
 // NSManagedObject helpers
 
 + (instancetype)insertIntoContext:(NSManagedObjectContext *)context;
