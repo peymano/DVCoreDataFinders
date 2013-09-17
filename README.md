@@ -6,17 +6,17 @@ CoreData has a flexible yet verbose API. DVCoreDataFinders adds a handful of use
 Some examples:
 
     // find all JournalEntry objects
-    NSArray *entries = [JournalEntry findAllInContext:self.managedObjectContext error:nil];
+    NSArray *entries = [JournalEntry findAllInContext:managedObjectContext error:nil];
 
     // find all JournalEntry objects matching a predicate
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"author = %@", email];
-    NSArray *entries = [JournalEntry findAllWithPredicate:predicate inContext:self.managedObjectContext error:nil];
+    NSArray *entries = [JournalEntry findAllWithPredicate:predicate inContext:managedObjectContext error:nil];
 
     // find the JournalEntry with id = 8
-    JournalEntry *entry = [JournalEntry findFirstWhereProperty:@"id" equals:@(8) inContext:self.managedObjectContext error:nil];
+    JournalEntry *entry = [JournalEntry findFirstWhereProperty:@"id" equals:@(8) inContext:managedObjectContext error:nil];
 
     // insert a JournalEntry object
-    JournalEntry *entity = [JournalEntry insertIntoContext:self.managedObjectContext];
+    JournalEntry *entity = [JournalEntry insertIntoContext:managedObjectContext];
     entity.title = @"a title";
     entity.createdAt = [NSDate date];
     ...
@@ -34,27 +34,37 @@ All methods
 
     // Finders
     + (NSArray *)findAllInContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+    + (NSArray *)findAllWithFetchRequest:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
     + (NSArray *)findAllWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+    + (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
     + (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
-    + (id)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
-    + (id)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+    + (instancetype)findFirstWithFetchRequest:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+    + (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+    + (instancetype)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+    + (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyName equals:(id)value insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+    + (instancetype)findFirstWhereProperty:(NSString *)propertyKey equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
     // NSFetchRequests helpers
-    + (NSFetchRequest *)fetchRequestInContext:(NSManagedObjectContext *)context;
-    + (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context;
-    + (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
+    + (NSFetchRequest *)fetchRequest;
+    + (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate;
+    + (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors;
+    + (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending;
 
     // NSFetchedResultsController helpers
-    + (NSFetchedResultsController *)fetchResultsControllerWithFetchRequest:(NSFetchRequest *)request sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context;
-    + (NSFetchedResultsController *)fetchResultsControllerWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context;
-    + (NSFetchedResultsController *)fetchResultsControllerWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
-    + (NSFetchedResultsController *)fetchResultsControllerWithSectionNameKeyPath:(NSString *)keyPath predicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context;
+    + (NSFetchedResultsController *)fetchedResultsControllerWithFetchRequest:(NSFetchRequest *)request sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context;
+    + (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context;
+    + (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
+    + (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context;
+
+    // Global filter predicate: if set, the global predicate is automatically added to all queries, all fetch requests, all fetched results controllers, etc.
+    + (NSPredicate *)globalFilterPredicate;
+    + (void)setGlobalFilterPredicate:(NSPredicate *)predicate;
 
     // NSManagedObject helpers
-    + (id)insertIntoContext:(NSManagedObjectContext *)context;
+    + (instancetype)insertIntoContext:(NSManagedObjectContext *)context;
 
     // Instance methods
-    - (id)findInContext:(NSManagedObjectContext *)context;
+    - (instancetype)findInContext:(NSManagedObjectContext *)context;
 
 Contact
 -------
