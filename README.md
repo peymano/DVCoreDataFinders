@@ -21,6 +21,13 @@ Some examples:
     entity.createdAt = [NSDate date];
     ...
 
+    // insert an new object if none found
+    JournalEntry *entry = [JournalEntry findFirstOrInsertWhereProperty:@"author" equals:@@"joe@example.com" insertBlock:^(JournalEntry *createdObject) {
+      createdObject.author = @"joe@example.com";
+      createdObject.body = @"this is an example";
+      ...
+    } inContext:self.managedObjectContext error:nil];
+
 
 All methods
 ----------
