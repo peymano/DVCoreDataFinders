@@ -1,5 +1,9 @@
 CHANGES
 
+= 0.5 (2013-09-17)
+
+Added `setGlobalFilterPredicate:`, which, if set, adds the predicate to all queries executed by DVCoreDataFinders methods. The filter is added as an **and predicate**. E.g., if you query for "id > 5" and the global filter predicate is set to "isTombstone = NO", the query that is executed is "id > 5 AND isTombstone = NO".
+
 = 0.4 (2013-06-19)
 
 A few breaking API changes:
