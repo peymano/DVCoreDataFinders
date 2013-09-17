@@ -28,6 +28,13 @@ Some examples:
       ...
     } inContext:self.managedObjectContext error:nil];
 
+Global filter predicate
+===============
+
+DVCoreDataFinders provides a global filter predicate, specified via `setGlobalFilterPredicate:`, which, when not `nil`,
+adds the predicate to all queries (as an *and* predicate) when executed. For example, if you query for the predicate
+`id > 5` and have set the global filter predicate to `isTombstone = NO`, the query that is executed is
+`id > 5 AND isTombstone = NO`.
 
 All methods
 ----------
