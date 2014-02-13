@@ -242,9 +242,9 @@
 
     JournalEntry *entry =
         [JournalEntry findFirstAndUpdateOrInsertWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '7'"]
-                                                  updateBlock:^(JournalEntry *createdObject) {
-                                                    createdObject.id = @(17);
-                                                    createdObject.body = @"this is 17";
+                                                  updateBlock:^(JournalEntry *objectToUpdate) {
+                                                    objectToUpdate.id = @(17);
+                                                    objectToUpdate.body = @"this is 17";
                                                   }
                                                     inContext:self.managedObjectContext
                                                         error:nil];
@@ -256,9 +256,9 @@
 
 - (void)testFindFirstAndUpdateOrInsertWithPredicateAndInserting
 {
-    JournalEntry *entry = [JournalEntry findFirstAndUpdateOrInsertWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '17'"] updateBlock:^(JournalEntry *createdObject) {
-        createdObject.id = @(17);
-        createdObject.body = @"this is 17";
+    JournalEntry *entry = [JournalEntry findFirstAndUpdateOrInsertWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '17'"] updateBlock:^(JournalEntry *objectToUpdate) {
+        objectToUpdate.id = @(17);
+        objectToUpdate.body = @"this is 17";
     } inContext:self.managedObjectContext error:nil];
 
     STAssertNotNil(entry, nil);
@@ -268,9 +268,9 @@
 
 - (void)testFindFirstAndUpdateOrInsertWhereAndFinding
 {
-    JournalEntry *entry = [JournalEntry findFirstAndUpdateOrInsertWhereProperty:@"id" equals:@(7) updateBlock:^(JournalEntry *createdObject) {
-        createdObject.id = @(17);
-        createdObject.body = @"this is 17";
+    JournalEntry *entry = [JournalEntry findFirstAndUpdateOrInsertWhereProperty:@"id" equals:@(7) updateBlock:^(JournalEntry *objectToUpdate) {
+        objectToUpdate.id = @(17);
+        objectToUpdate.body = @"this is 17";
     } inContext:self.managedObjectContext error:nil];
 
     STAssertNotNil(entry, nil);
@@ -280,9 +280,9 @@
 
 - (void)testFindFirstAndUpdateOrInsertWhereAndInserting
 {
-    JournalEntry *entry = [JournalEntry findFirstAndUpdateOrInsertWhereProperty:@"id" equals:@(17) updateBlock:^(JournalEntry *createdObject) {
-        createdObject.id = @(17);
-        createdObject.body = @"this is 17";
+    JournalEntry *entry = [JournalEntry findFirstAndUpdateOrInsertWhereProperty:@"id" equals:@(17) updateBlock:^(JournalEntry *objectToUpdate) {
+        objectToUpdate.id = @(17);
+        objectToUpdate.body = @"this is 17";
     } inContext:self.managedObjectContext error:nil];
 
     STAssertNotNil(entry, nil);

@@ -5,7 +5,8 @@
 
 #import <CoreData/CoreData.h>
 
-typedef void(^DVCoreDataFindersBlock)(id createdObject);
+typedef void(^DVCoreDataFindersCreateBlock)(id createdObject);
+typedef void(^DVCoreDataFindersUpdateBlock)(id objectToUpdate);
 
 @interface NSManagedObject (DVCoreDataFinders)
 
@@ -36,19 +37,19 @@ typedef void(^DVCoreDataFindersBlock)(id createdObject);
 
 // Finders: find first with a predicate
 
-+ (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate insertBlock:(DVCoreDataFindersBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
 + (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
-+ (instancetype)findFirstAndUpdateOrInsertWithPredicate:(NSPredicate *)predicate updateBlock:(DVCoreDataFindersBlock)updateBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstAndUpdateOrInsertWithPredicate:(NSPredicate *)predicate updateBlock:(DVCoreDataFindersUpdateBlock)updateBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
 + (instancetype)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
 // Finders: find first where "property = value"
 
-+ (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyName equals:(id)value insertBlock:(DVCoreDataFindersBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyName equals:(id)value insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
-+ (instancetype)findFirstAndUpdateOrInsertWhereProperty:(NSString *)propertyName equals:(id)value updateBlock:(DVCoreDataFindersBlock)updateBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstAndUpdateOrInsertWhereProperty:(NSString *)propertyName equals:(id)value updateBlock:(DVCoreDataFindersUpdateBlock)updateBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
 + (instancetype)findFirstWhereProperty:(NSString *)propertyName equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 

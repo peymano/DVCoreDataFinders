@@ -101,7 +101,7 @@ static NSPredicate *_globalFilterPredicate = nil;
     return [self findFirstOrInsertWithPredicate:predicate insertBlock:nil inContext:context error:errorPtr];
 }
 
-+ (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate insertBlock:(DVCoreDataFindersBlock)createBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate insertBlock:(DVCoreDataFindersCreateBlock)createBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 {
   id object = [self findFirstWithPredicate:predicate inContext:context error:errorPtr];
   if (object) {
@@ -117,7 +117,7 @@ static NSPredicate *_globalFilterPredicate = nil;
   return object;
 }
 
-+ (instancetype)findFirstAndUpdateOrInsertWithPredicate:(NSPredicate *)predicate updateBlock:(DVCoreDataFindersBlock)updateBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstAndUpdateOrInsertWithPredicate:(NSPredicate *)predicate updateBlock:(DVCoreDataFindersUpdateBlock)updateBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 {
     id object = [self findFirstWithPredicate:predicate inContext:context error:errorPtr];
     if (object == nil) {
@@ -141,13 +141,13 @@ static NSPredicate *_globalFilterPredicate = nil;
 
 #pragma mark - find first where "property = value"
 
-+ (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyName equals:(id)value insertBlock:(DVCoreDataFindersBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyName equals:(id)value insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 {
   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", propertyName, value];
   return [self findFirstOrInsertWithPredicate:predicate insertBlock:insertBlock inContext:context error:errorPtr];
 }
 
-+ (instancetype)findFirstAndUpdateOrInsertWhereProperty:(NSString *)propertyName equals:(id)value updateBlock:(DVCoreDataFindersBlock)updateBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype)findFirstAndUpdateOrInsertWhereProperty:(NSString *)propertyName equals:(id)value updateBlock:(DVCoreDataFindersUpdateBlock)updateBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", propertyName, value];
     return [self findFirstAndUpdateOrInsertWithPredicate:predicate updateBlock:updateBlock inContext:context error:errorPtr];
