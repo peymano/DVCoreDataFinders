@@ -87,6 +87,7 @@
 
 #pragma mark - Test setup & tear down
 
+
 - (void)setUp
 {
   [super setUp];
@@ -232,6 +233,81 @@
 
   STAssertNotNil(entry, nil);
   STAssertTrue(entry.id.integerValue == 17, nil);
+}
+
+#pragma mark - Find first and update or insert tests
+
+- (void)testFindFirstAndUpdateOrInsertWithPredicateAndFinding
+{
+
+    JournalEntry *entry =
+        [JournalEntry findFirstAndUpdateOrInsertWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '7'"]
+                                                  updateBlock:^(JournalEntry *createdObject) {
+                                                    createdObject.id = @(17);
+                                                    createdObject.body = @"this is 17";
+                                                  }
+                                                    inContext:self.managedObjectContext
+                                                        error:nil];
+
+    STAssertNotNil(entry, nil);
+    STAssertTrue(entry.id.integerValue == 17, nil);
+    STAssertEqualObjects(entry.body, @"this is 17", nil);
+}
+
+- (void)testFindFirstAndUpdateOrInsertWithPredicateAndInserting
+{
+    JournalEntry *entry = [JournalEntry findFirstAndUpdateOrInsertWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '17'"] updateBlock:^(JournalEntry *createdObject) {
+        createdObject.id = @(17);
+        createdObject.body = @"this is 17";
+    } inContext:self.managedObjectContext error:nil];
+
+    STAssertNotNil(entry, nil);
+    STAssertTrue(entry.id.integerValue == 17, nil);
+    STAssertEqualObjects(entry.body, @"this is 17", nil);
+}
+
+- (void)testFindFirstAndUpdateOrInsertWhereAndFinding
+{
+    JournalEntry *entry = [JournalEntry findFirstAndUpdateOrInsertWhereProperty:@"id" equals:@(7) updateBlock:^(JournalEntry *createdObject) {
+        createdObject.id = @(17);
+        createdObject.body = @"this is 17";
+    } inContext:self.managedObjectContext error:nil];
+
+    STAssertNotNil(entry, nil);
+    STAssertTrue(entry.id.integerValue == 17, nil);
+    STAssertEqualObjects(entry.body, @"this is 17", nil);
+}
+
+- (void)testFindFirstAndUpdateOrInsertWhereAndInserting
+{
+    JournalEntry *entry = [JournalEntry findFirstAndUpdateOrInsertWhereProperty:@"id" equals:@(17) updateBlock:^(JournalEntry *createdObject) {
+        createdObject.id = @(17);
+        createdObject.body = @"this is 17";
+    } inContext:self.managedObjectContext error:nil];
+
+    STAssertNotNil(entry, nil);
+    STAssertTrue(entry.id.integerValue == 17, nil);
+    STAssertEqualObjects(entry.body, @"this is 17", nil);
+}
+
+#pragma mark - Deletion
+- (void)testDeletingAllEntries
+{
+    NSInteger count = [JournalEntry countAllInContext:self.managedObjectContext error:nil];
+    STAssertEquals(count, 10, nil);
+    [JournalEntry deleteAllWithPredicate:nil inContext:self.managedObjectContext error:nil];
+    count = [JournalEntry countAllInContext:self.managedObjectContext error:nil];
+    STAssertEquals(count, 0, nil);
+}
+
+- (void)testDeletingRespectingPrediate
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id > 5"];
+    NSInteger count = [JournalEntry countAllInContext:self.managedObjectContext error:nil];
+    STAssertEquals(count, 10, nil);
+    [JournalEntry deleteAllWithPredicate:predicate inContext:self.managedObjectContext error:nil];
+    count = [JournalEntry countAllInContext:self.managedObjectContext error:nil];
+    STAssertEquals(count, 6, nil);
 }
 
 #pragma mark - Global filter predicate tests
