@@ -258,11 +258,9 @@ static NSPredicate *_globalFilterPredicate = nil;
 
 - (instancetype)findInContext:(NSManagedObjectContext *)context;
 {
-  NSError *error;
-
-  id object = [context existingObjectWithID:self.objectID error:&error];
+  id object = [context existingObjectWithID:self.objectID error:nil];
   if (object == nil) {
-    object = [context objectWithID:self.objectID];
+    return nil;
   }
 
   // `context` may have a stale (cached) copy of the object; force a refresh
