@@ -6,6 +6,7 @@
 #import <CoreData/CoreData.h>
 
 typedef void(^DVCoreDataFindersCreateBlock)(id createdObject);
+typedef void(^DVCoreDataFindersUpdateBlock)(id objectToUpdate);
 
 @interface NSManagedObject (DVCoreDataFinders)
 
@@ -33,11 +34,14 @@ typedef void(^DVCoreDataFindersCreateBlock)(id createdObject);
 
 // Finders: find first with a fetch request
 
-+ (instancetype)findFirstWithFetchRequest:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
 // Finders: find first with a predicate
 
 + (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+
++ (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+
++ (instancetype)findFirstAndUpdateOrInsertWithPredicate:(NSPredicate *)predicate updateBlock:(DVCoreDataFindersUpdateBlock)updateBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
 + (instancetype)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
@@ -45,7 +49,13 @@ typedef void(^DVCoreDataFindersCreateBlock)(id createdObject);
 
 + (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyName equals:(id)value insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
++ (instancetype)findFirstAndUpdateOrInsertWhereProperty:(NSString *)propertyName equals:(id)value updateBlock:(DVCoreDataFindersUpdateBlock)updateBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+
 + (instancetype)findFirstWhereProperty:(NSString *)propertyName equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+
+// Delete: delete entries
+
++ (void)deleteAllWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 
 // NSFetchRequests helpers
 

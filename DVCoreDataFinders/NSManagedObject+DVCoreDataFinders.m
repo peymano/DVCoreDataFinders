@@ -97,6 +97,10 @@ static NSPredicate *_globalFilterPredicate = nil;
 
 #pragma mark - Finders: find first with a predicate
 
++ (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr {
+    return [self findFirstOrInsertWithPredicate:predicate insertBlock:nil inContext:context error:errorPtr];
+}
+
 + (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate insertBlock:(DVCoreDataFindersCreateBlock)createBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 {
   id object = [self findFirstWithPredicate:predicate inContext:context error:errorPtr];
@@ -113,7 +117,21 @@ static NSPredicate *_globalFilterPredicate = nil;
   return object;
 }
 
-+ (instancetype)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
++ (instancetype)findFirstAndUpdateOrInsertWithPredicate:(NSPredicate *)predicate updateBlock:(DVCoreDataFindersUpdateBlock)updateBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+{
+    id object = [self findFirstWithPredicate:predicate inContext:context error:errorPtr];
+    if (object == nil) {
+        object = [self insertIntoContext:context];
+    }
+
+    if (updateBlock) {
+        updateBlock(object);
+    }
+    
+    return object;
+}
+
++ (instancetype)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 {
   NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate sortDescriptors:nil];
   fetchRequest.fetchLimit = 1;
@@ -123,16 +141,34 @@ static NSPredicate *_globalFilterPredicate = nil;
 
 #pragma mark - find first where "property = value"
 
-+ (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyName equals:(id)value insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
++ (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyName equals:(id)value insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 {
   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", propertyName, value];
   return [self findFirstOrInsertWithPredicate:predicate insertBlock:insertBlock inContext:context error:errorPtr];
 }
 
-+ (instancetype)findFirstWhereProperty:(NSString *)propertyName equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
++ (instancetype)findFirstAndUpdateOrInsertWhereProperty:(NSString *)propertyName equals:(id)value updateBlock:(DVCoreDataFindersUpdateBlock)updateBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", propertyName, value];
+    return [self findFirstAndUpdateOrInsertWithPredicate:predicate updateBlock:updateBlock inContext:context error:errorPtr];
+}
+
++ (instancetype)findFirstWhereProperty:(NSString *)propertyName equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
 {
   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K = %@", propertyName, value];
   return [self findFirstWithPredicate:predicate inContext:context error:errorPtr];
+}
+
+#pragma mark - delete
+
++ (void)deleteAllWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr {
+    NSFetchRequest *fetchRequest = [self fetchRequestWithPredicate:predicate];
+    fetchRequest.includesPropertyValues = NO;
+
+    NSArray *entries = [self findAllWithFetchRequest:fetchRequest inContext:context error:errorPtr];
+    for (id entry in entries) {
+        [context deleteObject:entry];
+    }
 }
 
 #pragma mark - NSFetchRequest helpers
