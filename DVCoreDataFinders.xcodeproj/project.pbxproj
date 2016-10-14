@@ -7,90 +7,99 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		700A161A16C96BC9007A8E71 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A161916C96BC9007A8E71 /* Foundation.framework */; };
-		700A162916C96BC9007A8E71 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A162816C96BC9007A8E71 /* SenTestingKit.framework */; };
-		700A162B16C96BC9007A8E71 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A162A16C96BC9007A8E71 /* UIKit.framework */; };
-		700A162C16C96BC9007A8E71 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A161916C96BC9007A8E71 /* Foundation.framework */; };
-		700A162F16C96BC9007A8E71 /* libDVCoreDataFinders.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A161616C96BC9007A8E71 /* libDVCoreDataFinders.a */; };
-		700A163516C96BC9007A8E71 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 700A163316C96BC9007A8E71 /* InfoPlist.strings */; };
-		700A163816C96BC9007A8E71 /* DVCoreDataFindersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 700A163716C96BC9007A8E71 /* DVCoreDataFindersTests.m */; };
-		700A164316C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m in Sources */ = {isa = PBXBuildFile; fileRef = 700A164216C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m */; };
-		700A164416C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m in Sources */ = {isa = PBXBuildFile; fileRef = 700A164216C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m */; };
-		700A164616C972C3007A8E71 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A164516C972C3007A8E71 /* CoreData.framework */; };
-		700A164E16C9790F007A8E71 /* Tests.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 700A164716C97408007A8E71 /* Tests.xcdatamodeld */; };
-		70EFE43817E8FBA9009AF343 /* JournalEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EFE43717E8FBA8009AF343 /* JournalEntry.m */; };
+		506321141DB16EFB00CE5EE7 /* NSManagedObject+DVCoreDataFinders.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FF8B511DB163B200B811F6 /* NSManagedObject+DVCoreDataFinders.m */; };
+		50FF8B3D1DB1636100B811F6 /* DVCoreDataFinders.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 50FF8B3A1DB1636100B811F6 /* DVCoreDataFinders.h */; };
+		50FF8B481DB1637D00B811F6 /* DVCoreDataFindersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FF8B471DB1637D00B811F6 /* DVCoreDataFindersTests.m */; };
+		50FF8B4A1DB1637D00B811F6 /* libDVCoreDataFinders.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FF8B381DB1636100B811F6 /* libDVCoreDataFinders.a */; };
+		50FF8B521DB163B200B811F6 /* NSManagedObject+DVCoreDataFinders.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FF8B511DB163B200B811F6 /* NSManagedObject+DVCoreDataFinders.m */; };
+		50FF8B571DB1641D00B811F6 /* JournalEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FF8B541DB1641D00B811F6 /* JournalEntry.m */; };
+		50FF8B581DB1641D00B811F6 /* Tests.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50FF8B551DB1641D00B811F6 /* Tests.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		700A162D16C96BC9007A8E71 /* PBXContainerItemProxy */ = {
+		50FF8B4B1DB1637D00B811F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 700A160E16C96BC9007A8E71 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 700A161516C96BC9007A8E71;
+			remoteGlobalIDString = 50FF8B371DB1636100B811F6;
 			remoteInfo = DVCoreDataFinders;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		700A161416C96BC9007A8E71 /* CopyFiles */ = {
+		50FF8B361DB1636100B811F6 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
+			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				50FF8B3D1DB1636100B811F6 /* DVCoreDataFinders.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		700A161616C96BC9007A8E71 /* libDVCoreDataFinders.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDVCoreDataFinders.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		50FF8B381DB1636100B811F6 /* libDVCoreDataFinders.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDVCoreDataFinders.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		50FF8B3A1DB1636100B811F6 /* DVCoreDataFinders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVCoreDataFinders.h; sourceTree = "<group>"; };
+		50FF8B451DB1637D00B811F6 /* DVCoreDataFindersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DVCoreDataFindersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		50FF8B471DB1637D00B811F6 /* DVCoreDataFindersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVCoreDataFindersTests.m; sourceTree = "<group>"; };
+		50FF8B491DB1637D00B811F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50FF8B501DB163B200B811F6 /* NSManagedObject+DVCoreDataFinders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+DVCoreDataFinders.h"; sourceTree = "<group>"; };
+		50FF8B511DB163B200B811F6 /* NSManagedObject+DVCoreDataFinders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+DVCoreDataFinders.m"; sourceTree = "<group>"; };
+		50FF8B531DB1641D00B811F6 /* JournalEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JournalEntry.h; sourceTree = "<group>"; };
+		50FF8B541DB1641D00B811F6 /* JournalEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalEntry.m; sourceTree = "<group>"; };
+		50FF8B561DB1641D00B811F6 /* Tests.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tests.xcdatamodel; sourceTree = "<group>"; };
 		700A161916C96BC9007A8E71 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		700A162716C96BC9007A8E71 /* DVCoreDataFindersTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DVCoreDataFindersTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		700A162816C96BC9007A8E71 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		700A162A16C96BC9007A8E71 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		700A163216C96BC9007A8E71 /* DVCoreDataFindersTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DVCoreDataFindersTests-Info.plist"; sourceTree = "<group>"; };
-		700A163416C96BC9007A8E71 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		700A163616C96BC9007A8E71 /* DVCoreDataFindersTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVCoreDataFindersTests.h; sourceTree = "<group>"; };
-		700A163716C96BC9007A8E71 /* DVCoreDataFindersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVCoreDataFindersTests.m; sourceTree = "<group>"; };
-		700A164116C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+DVCoreDataFinders.h"; sourceTree = "<group>"; };
-		700A164216C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+DVCoreDataFinders.m"; sourceTree = "<group>"; };
 		700A164516C972C3007A8E71 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		700A164816C97408007A8E71 /* Tests.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tests.xcdatamodel; sourceTree = "<group>"; };
-		700C69E216D021BE00F7CA59 /* DVCoreDataFinders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVCoreDataFinders.h; sourceTree = "<group>"; };
-		70EFE43617E8FBA8009AF343 /* JournalEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JournalEntry.h; sourceTree = "<group>"; };
-		70EFE43717E8FBA8009AF343 /* JournalEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JournalEntry.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		700A161316C96BC9007A8E71 /* Frameworks */ = {
+		50FF8B351DB1636100B811F6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				700A161A16C96BC9007A8E71 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		700A162316C96BC9007A8E71 /* Frameworks */ = {
+		50FF8B421DB1637D00B811F6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				700A164616C972C3007A8E71 /* CoreData.framework in Frameworks */,
-				700A162916C96BC9007A8E71 /* SenTestingKit.framework in Frameworks */,
-				700A162B16C96BC9007A8E71 /* UIKit.framework in Frameworks */,
-				700A162C16C96BC9007A8E71 /* Foundation.framework in Frameworks */,
-				700A162F16C96BC9007A8E71 /* libDVCoreDataFinders.a in Frameworks */,
+				50FF8B4A1DB1637D00B811F6 /* libDVCoreDataFinders.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50FF8B391DB1636100B811F6 /* DVCoreDataFinders */ = {
+			isa = PBXGroup;
+			children = (
+				50FF8B3A1DB1636100B811F6 /* DVCoreDataFinders.h */,
+				50FF8B501DB163B200B811F6 /* NSManagedObject+DVCoreDataFinders.h */,
+				50FF8B511DB163B200B811F6 /* NSManagedObject+DVCoreDataFinders.m */,
+			);
+			path = DVCoreDataFinders;
+			sourceTree = "<group>";
+		};
+		50FF8B461DB1637D00B811F6 /* DVCoreDataFindersTests */ = {
+			isa = PBXGroup;
+			children = (
+				50FF8B531DB1641D00B811F6 /* JournalEntry.h */,
+				50FF8B541DB1641D00B811F6 /* JournalEntry.m */,
+				50FF8B551DB1641D00B811F6 /* Tests.xcdatamodeld */,
+				50FF8B471DB1637D00B811F6 /* DVCoreDataFindersTests.m */,
+				50FF8B491DB1637D00B811F6 /* Info.plist */,
+			);
+			path = DVCoreDataFindersTests;
+			sourceTree = "<group>";
+		};
 		700A160D16C96BC9007A8E71 = {
 			isa = PBXGroup;
 			children = (
-				700A161B16C96BC9007A8E71 /* DVCoreDataFinders */,
-				700A163016C96BC9007A8E71 /* DVCoreDataFindersTests */,
+				50FF8B391DB1636100B811F6 /* DVCoreDataFinders */,
+				50FF8B461DB1637D00B811F6 /* DVCoreDataFindersTests */,
 				700A161816C96BC9007A8E71 /* Frameworks */,
 				700A161716C96BC9007A8E71 /* Products */,
 			);
@@ -99,8 +108,8 @@
 		700A161716C96BC9007A8E71 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				700A161616C96BC9007A8E71 /* libDVCoreDataFinders.a */,
-				700A162716C96BC9007A8E71 /* DVCoreDataFindersTests.octest */,
+				50FF8B381DB1636100B811F6 /* libDVCoreDataFinders.a */,
+				50FF8B451DB1637D00B811F6 /* DVCoreDataFindersTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -110,54 +119,20 @@
 			children = (
 				700A164516C972C3007A8E71 /* CoreData.framework */,
 				700A161916C96BC9007A8E71 /* Foundation.framework */,
-				700A162816C96BC9007A8E71 /* SenTestingKit.framework */,
-				700A162A16C96BC9007A8E71 /* UIKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		700A161B16C96BC9007A8E71 /* DVCoreDataFinders */ = {
-			isa = PBXGroup;
-			children = (
-				700C69E216D021BE00F7CA59 /* DVCoreDataFinders.h */,
-				700A164116C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.h */,
-				700A164216C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m */,
-			);
-			path = DVCoreDataFinders;
-			sourceTree = "<group>";
-		};
-		700A163016C96BC9007A8E71 /* DVCoreDataFindersTests */ = {
-			isa = PBXGroup;
-			children = (
-				700A163616C96BC9007A8E71 /* DVCoreDataFindersTests.h */,
-				700A163716C96BC9007A8E71 /* DVCoreDataFindersTests.m */,
-				700A163116C96BC9007A8E71 /* Supporting Files */,
-			);
-			path = DVCoreDataFindersTests;
-			sourceTree = "<group>";
-		};
-		700A163116C96BC9007A8E71 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				700A163216C96BC9007A8E71 /* DVCoreDataFindersTests-Info.plist */,
-				700A163316C96BC9007A8E71 /* InfoPlist.strings */,
-				700A164716C97408007A8E71 /* Tests.xcdatamodeld */,
-				70EFE43617E8FBA8009AF343 /* JournalEntry.h */,
-				70EFE43717E8FBA8009AF343 /* JournalEntry.m */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		700A161516C96BC9007A8E71 /* DVCoreDataFinders */ = {
+		50FF8B371DB1636100B811F6 /* DVCoreDataFinders */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 700A163B16C96BC9007A8E71 /* Build configuration list for PBXNativeTarget "DVCoreDataFinders" */;
+			buildConfigurationList = 50FF8B3E1DB1636100B811F6 /* Build configuration list for PBXNativeTarget "DVCoreDataFinders" */;
 			buildPhases = (
-				700A161216C96BC9007A8E71 /* Sources */,
-				700A161316C96BC9007A8E71 /* Frameworks */,
-				700A161416C96BC9007A8E71 /* CopyFiles */,
+				50FF8B341DB1636100B811F6 /* Sources */,
+				50FF8B351DB1636100B811F6 /* Frameworks */,
+				50FF8B361DB1636100B811F6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -165,27 +140,26 @@
 			);
 			name = DVCoreDataFinders;
 			productName = DVCoreDataFinders;
-			productReference = 700A161616C96BC9007A8E71 /* libDVCoreDataFinders.a */;
+			productReference = 50FF8B381DB1636100B811F6 /* libDVCoreDataFinders.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		700A162616C96BC9007A8E71 /* DVCoreDataFindersTests */ = {
+		50FF8B441DB1637D00B811F6 /* DVCoreDataFindersTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 700A163E16C96BC9007A8E71 /* Build configuration list for PBXNativeTarget "DVCoreDataFindersTests" */;
+			buildConfigurationList = 50FF8B4D1DB1637D00B811F6 /* Build configuration list for PBXNativeTarget "DVCoreDataFindersTests" */;
 			buildPhases = (
-				700A162216C96BC9007A8E71 /* Sources */,
-				700A162316C96BC9007A8E71 /* Frameworks */,
-				700A162416C96BC9007A8E71 /* Resources */,
-				700A162516C96BC9007A8E71 /* ShellScript */,
+				50FF8B411DB1637D00B811F6 /* Sources */,
+				50FF8B421DB1637D00B811F6 /* Frameworks */,
+				50FF8B431DB1637D00B811F6 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				700A162E16C96BC9007A8E71 /* PBXTargetDependency */,
+				50FF8B4C1DB1637D00B811F6 /* PBXTargetDependency */,
 			);
 			name = DVCoreDataFindersTests;
 			productName = DVCoreDataFindersTests;
-			productReference = 700A162716C96BC9007A8E71 /* DVCoreDataFindersTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 50FF8B451DB1637D00B811F6 /* DVCoreDataFindersTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -193,8 +167,18 @@
 		700A160E16C96BC9007A8E71 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Dynamic Variable LLC";
+				TargetAttributes = {
+					50FF8B371DB1636100B811F6 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+					50FF8B441DB1637D00B811F6 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 700A161116C96BC9007A8E71 /* Build configuration list for PBXProject "DVCoreDataFinders" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -208,81 +192,139 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				700A161516C96BC9007A8E71 /* DVCoreDataFinders */,
-				700A162616C96BC9007A8E71 /* DVCoreDataFindersTests */,
+				50FF8B371DB1636100B811F6 /* DVCoreDataFinders */,
+				50FF8B441DB1637D00B811F6 /* DVCoreDataFindersTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		700A162416C96BC9007A8E71 /* Resources */ = {
+		50FF8B431DB1637D00B811F6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				700A163516C96BC9007A8E71 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		700A162516C96BC9007A8E71 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		700A161216C96BC9007A8E71 /* Sources */ = {
+		50FF8B341DB1636100B811F6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				700A164316C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m in Sources */,
+				50FF8B521DB163B200B811F6 /* NSManagedObject+DVCoreDataFinders.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		700A162216C96BC9007A8E71 /* Sources */ = {
+		50FF8B411DB1637D00B811F6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				700A164E16C9790F007A8E71 /* Tests.xcdatamodeld in Sources */,
-				700A163816C96BC9007A8E71 /* DVCoreDataFindersTests.m in Sources */,
-				700A164416C96C0E007A8E71 /* NSManagedObject+DVCoreDataFinders.m in Sources */,
-				70EFE43817E8FBA9009AF343 /* JournalEntry.m in Sources */,
+				50FF8B571DB1641D00B811F6 /* JournalEntry.m in Sources */,
+				50FF8B481DB1637D00B811F6 /* DVCoreDataFindersTests.m in Sources */,
+				506321141DB16EFB00CE5EE7 /* NSManagedObject+DVCoreDataFinders.m in Sources */,
+				50FF8B581DB1641D00B811F6 /* Tests.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		700A162E16C96BC9007A8E71 /* PBXTargetDependency */ = {
+		50FF8B4C1DB1637D00B811F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 700A161516C96BC9007A8E71 /* DVCoreDataFinders */;
-			targetProxy = 700A162D16C96BC9007A8E71 /* PBXContainerItemProxy */;
+			target = 50FF8B371DB1636100B811F6 /* DVCoreDataFinders */;
+			targetProxy = 50FF8B4B1DB1637D00B811F6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		700A163316C96BC9007A8E71 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				700A163416C96BC9007A8E71 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
+		50FF8B3F1DB1636100B811F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		50FF8B401DB1636100B811F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		50FF8B4E1DB1637D00B811F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = DVCoreDataFindersTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dynamicvariable.DVCoreDataFindersTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		50FF8B4F1DB1637D00B811F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = DVCoreDataFindersTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dynamicvariable.DVCoreDataFindersTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		700A163916C96BC9007A8E71 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -290,24 +332,34 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -320,79 +372,52 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		700A163C16C96BC9007A8E71 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DSTROOT = /tmp/DVCoreDataFinders.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		700A163D16C96BC9007A8E71 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DSTROOT = /tmp/DVCoreDataFinders.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		700A163F16C96BC9007A8E71 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				INFOPLIST_FILE = "DVCoreDataFindersTests/DVCoreDataFindersTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		700A164016C96BC9007A8E71 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				INFOPLIST_FILE = "DVCoreDataFindersTests/DVCoreDataFindersTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		50FF8B3E1DB1636100B811F6 /* Build configuration list for PBXNativeTarget "DVCoreDataFinders" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50FF8B3F1DB1636100B811F6 /* Debug */,
+				50FF8B401DB1636100B811F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50FF8B4D1DB1637D00B811F6 /* Build configuration list for PBXNativeTarget "DVCoreDataFindersTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50FF8B4E1DB1637D00B811F6 /* Debug */,
+				50FF8B4F1DB1637D00B811F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		700A161116C96BC9007A8E71 /* Build configuration list for PBXProject "DVCoreDataFinders" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -402,36 +427,17 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		700A163B16C96BC9007A8E71 /* Build configuration list for PBXNativeTarget "DVCoreDataFinders" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				700A163C16C96BC9007A8E71 /* Debug */,
-				700A163D16C96BC9007A8E71 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		700A163E16C96BC9007A8E71 /* Build configuration list for PBXNativeTarget "DVCoreDataFindersTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				700A163F16C96BC9007A8E71 /* Debug */,
-				700A164016C96BC9007A8E71 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		700A164716C97408007A8E71 /* Tests.xcdatamodeld */ = {
+		50FF8B551DB1641D00B811F6 /* Tests.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				700A164816C97408007A8E71 /* Tests.xcdatamodel */,
+				50FF8B561DB1641D00B811F6 /* Tests.xcdatamodel */,
 			);
-			currentVersion = 700A164816C97408007A8E71 /* Tests.xcdatamodel */;
-			name = Tests.xcdatamodeld;
-			path = DVCoreDataFindersTests/Tests.xcdatamodeld;
-			sourceTree = SOURCE_ROOT;
+			currentVersion = 50FF8B561DB1641D00B811F6 /* Tests.xcdatamodel */;
+			path = Tests.xcdatamodeld;
+			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */

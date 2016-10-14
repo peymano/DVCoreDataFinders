@@ -4,9 +4,13 @@
 //
 
 #import <CoreData/CoreData.h>
-#import "DVCoreDataFindersTests.h"
+#import <XCTest/XCTest.h>
 #import "DVCoreDataFinders.h"
 #import "JournalEntry.h"
+
+@interface DVCoreDataFindersTests : XCTestCase
+
+@end
 
 @implementation DVCoreDataFindersTests
 {
@@ -20,7 +24,7 @@
   if (_managedObjectContext == nil) {
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-      _managedObjectContext = [[NSManagedObjectContext alloc] init];
+      _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
       [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
   }
@@ -119,13 +123,13 @@
 - (void)testFindAll
 {
   NSArray *entries = [JournalEntry findAllInContext:self.managedObjectContext error:nil];
-  STAssertTrue(entries.count == 10, nil);
+  XCTAssertEqual(entries.count, 10);
 }
 
 - (void)testFindAllWithPredicate
 {
   NSArray *entries = [JournalEntry findAllWithPredicate:[NSPredicate predicateWithFormat:@"id >= 5"] inContext:self.managedObjectContext error:nil];
-  STAssertTrue(entries.count == 5, nil);
+  XCTAssertEqual(entries.count, 5);
 }
 
 - (void)testFindAllExcludingPendingChanges
@@ -137,19 +141,19 @@
   NSError *error;
 
   entries = [JournalEntry findAllWithPredicate:[NSPredicate predicateWithFormat:@"id >= 5"] sortDescriptors:nil inContext:self.managedObjectContext error:&error];
-  STAssertTrue(entries.count == 6, nil);
+  XCTAssertEqual(entries.count, 6);
 
   // with includesPendingChanges=NO
   NSFetchRequest *fetchRequest = [JournalEntry fetchRequestWithPredicate:[NSPredicate predicateWithFormat:@"id >= 5"]];
   fetchRequest.includesPendingChanges = NO;
   entries = [JournalEntry findAllWithFetchRequest:fetchRequest inContext:self.managedObjectContext error:nil];
-  STAssertTrue(entries.count == 5, nil);
+  XCTAssertEqual(entries.count, 5);
 }
 
 - (void)testFindAllWithPredicateWithoutMatch
 {
   NSArray *entries = [JournalEntry findAllWithPredicate:[NSPredicate predicateWithFormat:@"id > 15"] inContext:self.managedObjectContext error:nil];
-  STAssertTrue(entries.count == 0, nil);
+  XCTAssertEqual(entries.count, 0);
 }
 
 #pragma mark - Find first tests
@@ -157,34 +161,34 @@
 - (void)testFindFirst
 {
   JournalEntry *entry = [JournalEntry findFirstWhereProperty:@"id" equals:@(8) inContext:self.managedObjectContext error:nil];
-  STAssertNotNil(entry, nil);
-  STAssertTrue(entry.id.integerValue == 8, nil);
+  XCTAssertNotNil(entry);
+  XCTAssertEqual(entry.id.integerValue, 8);
 }
 
 - (void)testFindFirstWithoutMatch
 {
   JournalEntry *entry = [JournalEntry findFirstWhereProperty:@"id" equals:@(15) inContext:self.managedObjectContext error:nil];
-  STAssertNil(entry, nil);
+  XCTAssertNil(entry);
 }
 
 - (void)testFindFirstWithSimplePredicateMatching
 {
   JournalEntry *entry = [JournalEntry findFirstWithPredicate:[NSPredicate predicateWithFormat:@"title = %@", @"title 6"] inContext:self.managedObjectContext error:nil];
-  STAssertNotNil(entry, nil);
-  STAssertTrue(entry.id.integerValue == 6, nil);
+  XCTAssertNotNil(entry);
+  XCTAssertEqual(entry.id.integerValue, 6);
 }
 
 - (void)testFindFirstWithContainsPredicateMatching
 {
   JournalEntry *entry = [JournalEntry findFirstWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '6'"] inContext:self.managedObjectContext error:nil];
-  STAssertNotNil(entry, nil);
-  STAssertTrue(entry.id.integerValue == 6, nil);
+  XCTAssertNotNil(entry);
+  XCTAssertEqual(entry.id.integerValue, 6);
 }
 
 - (void)testFindFirstWithPredicateNotMatching
 {
   JournalEntry *entry = [JournalEntry findFirstWithPredicate:[NSPredicate predicateWithFormat:@"body CONTAINS '16'"] inContext:self.managedObjectContext error:nil];
-  STAssertNil(entry, nil);
+  XCTAssertNil(entry);
 }
 
 #pragma mark - Find first or insert tests
@@ -196,8 +200,8 @@
     createdObject.body = @"this is 17";
   } inContext:self.managedObjectContext error:nil];
 
-  STAssertNotNil(entry, nil);
-  STAssertTrue(entry.id.integerValue == 7, nil);
+  XCTAssertNotNil(entry);
+  XCTAssertEqual(entry.id.integerValue, 7);
 }
 
 - (void)testFindFirstOrInsertWithPredicateAndInserting
@@ -207,9 +211,9 @@
     createdObject.body = @"this is 17";
   } inContext:self.managedObjectContext error:nil];
 
-  STAssertNotNil(entry, nil);
-  STAssertTrue(entry.id.integerValue == 17, nil);
-  STAssertEqualObjects(entry.body, @"this is 17", nil);
+  XCTAssertNotNil(entry);
+  XCTAssertEqual(entry.id.integerValue, 17);
+  XCTAssertEqualObjects(entry.body, @"this is 17");
 }
 
 - (void)testFindFirstOrInsertWhereAndFinding
@@ -219,8 +223,8 @@
     createdObject.body = @"this is 17";
   } inContext:self.managedObjectContext error:nil];
 
-  STAssertNotNil(entry, nil);
-  STAssertTrue(entry.id.integerValue == 7, nil);
+  XCTAssertNotNil(entry);
+  XCTAssertEqual(entry.id.integerValue, 7);
 }
 
 - (void)testFindFirstOrInsertWhereAndInserting
@@ -230,8 +234,8 @@
     createdObject.body = @"this is 17";
   } inContext:self.managedObjectContext error:nil];
 
-  STAssertNotNil(entry, nil);
-  STAssertTrue(entry.id.integerValue == 17, nil);
+  XCTAssertNotNil(entry);
+  XCTAssertEqual(entry.id.integerValue, 17);
 }
 
 #pragma mark - Global filter predicate tests
@@ -247,7 +251,7 @@
   [self setGlobalFilterPredicate];
 
   NSArray *results = [JournalEntry findAllInContext:self.managedObjectContext error:nil];
-  STAssertTrue(results.count == 5, nil);
+  XCTAssertEqual(results.count, 5);
 }
 
 - (void)testGlobalFilterPredicateWithFindAllWithPredicate
@@ -255,10 +259,10 @@
   [self setGlobalFilterPredicate];
 
   NSArray *entries = [JournalEntry findAllWithPredicate:[NSPredicate predicateWithFormat:@"id >= 5"] inContext:self.managedObjectContext error:nil];
-  STAssertTrue(entries.count == 2, nil);
+  XCTAssertEqual(entries.count, 2);
 
   [entries enumerateObjectsUsingBlock:^(JournalEntry *journalEntry, NSUInteger idx, BOOL *stop) {
-    STAssertTrue(journalEntry.isTombstone.boolValue == NO, nil);
+    XCTAssertFalse(journalEntry.isTombstone.boolValue);
   }];
 }
 
@@ -269,13 +273,13 @@
   // test using `fetchRequestWithPredicate:`
   NSFetchRequest *fetchRequest = [JournalEntry fetchRequestWithPredicate:[NSPredicate predicateWithFormat:@"id >= 7"]];
   NSArray *entries = [JournalEntry findAllWithFetchRequest:fetchRequest inContext:self.managedObjectContext error:nil];
-  STAssertTrue(entries.count == 1, nil);
+  XCTAssertEqual(entries.count, 1);
 
   // test using `[NSFetchRequest alloc] initWithEntityName:`
   NSFetchRequest *fetchRequest2 = [[NSFetchRequest alloc] initWithEntityName:@"JournalEntry"];
   fetchRequest2.predicate = [NSPredicate predicateWithFormat:@"id >= 7"];
   NSArray *entries2 = [JournalEntry findAllWithFetchRequest:fetchRequest2 inContext:self.managedObjectContext error:nil];
-  STAssertTrue(entries2.count == 1, nil);
+  XCTAssertEqual(entries2.count, 1);
 }
 
 - (void)testGlobalFilterPredicateWithFindFirstWithPredicate
@@ -285,13 +289,13 @@
   // object found
 
   JournalEntry *entry = [JournalEntry findFirstWithPredicate:[NSPredicate predicateWithFormat:@"title = %@", @"title 6"] inContext:self.managedObjectContext error:nil];
-  STAssertNotNil(entry, nil);
-  STAssertTrue(entry.id.integerValue == 6, nil);
+  XCTAssertNotNil(entry);
+  XCTAssertEqual(entry.id.integerValue, 6);
 
   // object not found
 
   JournalEntry *entry2 = [JournalEntry findFirstWithPredicate:[NSPredicate predicateWithFormat:@"title = %@", @"title 7"] inContext:self.managedObjectContext error:nil];
-  STAssertNil(entry2, nil);
+  XCTAssertNil(entry2);
 }
 
 @end
