@@ -41,7 +41,7 @@ static NSPredicate *_globalFilterPredicate = nil;
 
 + (NSArray *)findAllInContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr
 {
-  NSFetchRequest *fetchRequest = [self fetchRequest];
+  NSFetchRequest *fetchRequest = [self dv_fetchRequest];
   return [context executeFetchRequest:fetchRequest error:errorPtr];
 }
 
@@ -137,7 +137,7 @@ static NSPredicate *_globalFilterPredicate = nil;
 
 #pragma mark - NSFetchRequest helpers
 
-+ (NSFetchRequest *)fetchRequest
++ (NSFetchRequest *)dv_fetchRequest
 {
   return [self fetchRequestWithPredicate:nil sortDescriptors:nil];
 }

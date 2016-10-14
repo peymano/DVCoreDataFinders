@@ -49,7 +49,7 @@ typedef void(^DVCoreDataFindersCreateBlock)(id createdObject);
 
 // NSFetchRequests helpers
 
-+ (NSFetchRequest *)fetchRequest;
++ (NSFetchRequest *)dv_fetchRequest;
 
 + (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate;
 
