@@ -5,80 +5,80 @@
 
 #import <CoreData/CoreData.h>
 
-typedef void(^DVCoreDataFindersCreateBlock)(id createdObject);
+typedef void(^DVCoreDataFindersCreateBlock)(id _Nonnull createdObject);
 
 @interface NSManagedObject (DVCoreDataFinders)
 
 // Counters
 
-+ (NSUInteger)countAllInContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (NSUInteger)countAllInContext:(NSManagedObjectContext * _Nonnull)context error:(NSError * _Nullable * _Nullable)errorPtr;
 
-+ (NSUInteger)countAllWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (NSUInteger)countAllWithPredicate:(NSPredicate * _Nullable)predicate inContext:(NSManagedObjectContext * _Nonnull)context error:(NSError * _Nullable * _Nullable)errorPtr;
 
 // Entity helpers
 
-+ (NSEntityDescription *)entityInContext:(NSManagedObjectContext *)context;
++ (NSEntityDescription * _Nonnull)entityInContext:(NSManagedObjectContext * _Nonnull)context;
 
 // Finders: find all
 
-+ (NSArray *)findAllInContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (NSArray * _Nullable)findAllInContext:(NSManagedObjectContext * _Nonnull)context error:(NSError * _Nullable * _Nullable)errorPtr;
 
-+ (NSArray *)findAllWithFetchRequest:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (NSArray * _Nullable)findAllWithFetchRequest:(NSFetchRequest * _Nonnull)fetchRequest inContext:(NSManagedObjectContext * _Nonnull)context error:(NSError * _Nullable * _Nullable)errorPtr;
 
-+ (NSArray *)findAllWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (NSArray * _Nullable)findAllWithPredicate:(NSPredicate * _Nonnull)predicate inContext:(NSManagedObjectContext * _Nonnull)context error:(NSError * _Nullable * _Nullable)errorPtr;
 
-+ (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (NSArray * _Nullable)findAllWithPredicate:(NSPredicate * _Nullable)predicate sortDescriptors:(NSArray * _Nullable)sortDescriptors inContext:(NSManagedObjectContext * _Nonnull)context error:(NSError * _Nullable * _Nullable)errorPtr;
 
-+ (NSArray *)findAllWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (NSArray * _Nullable)findAllWithPredicate:(NSPredicate * _Nullable)predicate sortedBy:(NSString * _Nullable)sortBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext * _Nonnull)context error:(NSError * _Nullable * _Nullable)errorPtr;
 
 // Finders: find first with a fetch request
 
-+ (instancetype)findFirstWithFetchRequest:(NSFetchRequest *)fetchRequest inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype _Nullable)findFirstWithFetchRequest:(NSFetchRequest * _Nonnull)fetchRequest inContext:(NSManagedObjectContext * _Nonnull)context error:(NSError * _Nullable * _Nullable)errorPtr;
 
 // Finders: find first with a predicate
 
-+ (instancetype)findFirstOrInsertWithPredicate:(NSPredicate *)predicate insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype _Nonnull)findFirstOrInsertWithPredicate:(NSPredicate * _Nonnull)predicate insertBlock:(DVCoreDataFindersCreateBlock _Nullable)insertBlock inContext:(NSManagedObjectContext * _Nonnull)context error:(NSError * _Nullable * _Nullable)errorPtr;
 
-+ (instancetype)findFirstWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype _Nullable)findFirstWithPredicate:(NSPredicate * _Nonnull)predicate inContext:(NSManagedObjectContext * _Nonnull)context error:(NSError * _Nullable * _Nullable)errorPtr;
 
 // Finders: find first where "property = value"
 
-+ (instancetype)findFirstOrInsertWhereProperty:(NSString *)propertyName equals:(id)value insertBlock:(DVCoreDataFindersCreateBlock)insertBlock inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype _Nullable)findFirstOrInsertWhereProperty:(NSString * _Nonnull)propertyName equals:(id _Nullable)value insertBlock:(DVCoreDataFindersCreateBlock _Nullable)insertBlock inContext:(NSManagedObjectContext * _Nonnull)context error:(NSError * _Nullable * _Nullable)errorPtr;
 
-+ (instancetype)findFirstWhereProperty:(NSString *)propertyName equals:(id)value inContext:(NSManagedObjectContext *)context error:(NSError **)errorPtr;
++ (instancetype _Nullable)findFirstWhereProperty:(NSString * _Nonnull)propertyName equals:(id _Nullable)value inContext:(NSManagedObjectContext * _Nonnull)context error:(NSError * _Nullable * _Nullable)errorPtr;
 
 // NSFetchRequests helpers
 
-+ (NSFetchRequest *)dv_fetchRequest;
++ (NSFetchRequest * _Nonnull)dv_fetchRequest;
 
-+ (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate;
++ (NSFetchRequest * _Nonnull)fetchRequestWithPredicate:(NSPredicate * _Nonnull)predicate;
 
-+ (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors;
++ (NSFetchRequest * _Nonnull)fetchRequestWithPredicate:(NSPredicate * _Nullable)predicate sortDescriptors:(NSArray * _Nullable)sortDescriptors;
 
-+ (NSFetchRequest *)fetchRequestWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortBy ascending:(BOOL)ascending;
++ (NSFetchRequest * _Nonnull)fetchRequestWithPredicate:(NSPredicate * _Nullable)predicate sortedBy:(NSString * _Nullable)sortBy ascending:(BOOL)ascending;
 
 // NSFetchedResultsController helpers
 
-+ (NSFetchedResultsController *)fetchedResultsControllerWithFetchRequest:(NSFetchRequest *)fetchRequest sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context;
++ (NSFetchedResultsController * _Nonnull)fetchedResultsControllerWithFetchRequest:(NSFetchRequest * _Nonnull)fetchRequest sectionNameKeyPath:(NSString * _Nullable)keyPath inContext:(NSManagedObjectContext * _Nonnull)context;
 
-+ (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)context;
++ (NSFetchedResultsController * _Nonnull)fetchedResultsControllerWithPredicate:(NSPredicate * _Nullable)predicate sortDescriptors:(NSArray * _Nullable)sortDescriptors inContext:(NSManagedObjectContext * _Nonnull)context;
 
-+ (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext *)context;
++ (NSFetchedResultsController * _Nonnull)fetchedResultsControllerWithPredicate:(NSPredicate * _Nullable)predicate sortedBy:(NSString * _Nullable)sortedBy ascending:(BOOL)ascending inContext:(NSManagedObjectContext * _Nonnull)context;
 
-+ (NSFetchedResultsController *)fetchedResultsControllerWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors sectionNameKeyPath:(NSString *)keyPath inContext:(NSManagedObjectContext *)context;
++ (NSFetchedResultsController * _Nonnull)fetchedResultsControllerWithPredicate:(NSPredicate * _Nullable)predicate sortDescriptors:(NSArray * _Nullable)sortDescriptors sectionNameKeyPath:(NSString * _Nullable)keyPath inContext:(NSManagedObjectContext * _Nonnull)context;
 
 // Global filter predicate: if set, the global predicate is automatically added to all queries, all fetch requests, all fetched results controllers, etc.
 
-+ (NSPredicate *)globalFilterPredicate;
++ (NSPredicate * _Nullable)globalFilterPredicate;
 
-+ (void)setGlobalFilterPredicate:(NSPredicate *)predicate;
++ (void)setGlobalFilterPredicate:(NSPredicate * _Nullable)predicate;
 
 // NSManagedObject helpers
 
-+ (instancetype)insertIntoContext:(NSManagedObjectContext *)context;
++ (instancetype _Nonnull)insertIntoContext:(NSManagedObjectContext * _Nonnull)context;
 
 // Instance methods
 
-- (instancetype)findInContext:(NSManagedObjectContext *)context;
+- (instancetype _Nullable)findInContext:(NSManagedObjectContext * _Nonnull)context;
 
 @end
